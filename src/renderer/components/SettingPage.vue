@@ -9,9 +9,8 @@
             </el-header>
             <el-main>
                 <keep-alive>
-                    <transition name="el-fade-in-linear">
-                        <normal-setting v-if="activeIndex==='1'"></normal-setting>
-                        <server-setting v-if="activeIndex==='2'"></server-setting>
+                    <transition name="component-fade" mode="out-in">
+                        <component :is="viewName"></component>
                     </transition>
                 </keep-alive>
             </el-main>
@@ -32,11 +31,12 @@
 
   export default {
     name: 'SettingPage',
-    components: {NormalSetting, ServerSetting},
+    components: {'normal': NormalSetting, 'server': ServerSetting},
     mounted () {
     },
     data () {
       return {
+        viewName: 'normal',
         activeIndex: '1'
       }
     },
@@ -45,7 +45,9 @@
     },
     methods: {
       handleSelect (key, keyPath) {
+        const viewList = ['normal', 'server']
         this.activeIndex = key
+        this.viewName = viewList[key - 1]
       },
       closeSet () {
         console.info(this.settingStatus)

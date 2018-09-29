@@ -84,7 +84,7 @@
     },
     data () {
       return {
-        btnActive: false,
+        btnActive: true,
         dialogVisible: false,
         options: [{
           value: '0',

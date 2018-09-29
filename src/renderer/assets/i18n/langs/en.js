@@ -11,5 +11,15 @@ export const m = {
   common: 'Common',
   server: 'Server',
   cancel: 'Cancel',
-  confirm: 'Apply'
+  confirm: 'Apply',
+  limit: 'History limit',
+  workWith: 'Work with',
+  service: 'Service',
+  bucket: 'Bucket',
+  secretId: 'Secret ID',
+  secretKey: 'Secret Key',
+  region: 'Region',
+  configId: 'Config ID',
+  configName: 'Config Name',
+  language: 'Language'
 }

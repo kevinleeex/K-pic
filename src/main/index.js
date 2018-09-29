@@ -69,12 +69,12 @@ const getWindowPosition = () => {
 
 const createWindow = () => {
   window = new BrowserWindow({
-    width: 380,
-    height: 450,
+    width: 360,
+    height: 480,
     show: false,
     frame: false,
     fullscreenable: false,
-    resizable: true,
+    resizable: false,
     alwaysOnTop: true,
     transparent: true,
     webPreferences: {
@@ -106,8 +106,8 @@ const toggleMenu = () => {
 
 function openWindow (url) {
   const win = new BrowserWindow({
-    height: 500,
-    width: 350,
+    height: 320,
+    width: 450,
     title: 'K-Pic',
     show: false,
     useContentSize: true,

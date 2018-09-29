@@ -11,5 +11,15 @@ export const m = {
   common: '常规',
   server: '服务器',
   cancel: '取消',
-  confirm: '确认'
+  confirm: '确认',
+  limit: '历史条目数量',
+  workWith: '正在使用',
+  service: '服务商',
+  bucket: 'Bucket',
+  secretId: 'Secret ID',
+  secretKey: 'Secret Key',
+  region: 'Region',
+  configId: 'Config ID',
+  configName: '名称',
+  language: '语言'
 }
