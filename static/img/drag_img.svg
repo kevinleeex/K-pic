@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="99px" height="96px" viewBox="0 0 99 96" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>img</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-7.7%" y="-5.7%" width="115.4%" height="115.9%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="iPhone-SE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-111.000000, -94.000000)">
+        <g id="img" filter="url(#filter-1)" transform="translate(115.000000, 96.000000)" fill-rule="nonzero">
+            <path d="M85.1294889,0 L5.87101667,0 C2.62838333,0 0,2.62698631 0,5.8667677 L0,82.1327271 C0,85.3735189 2.62888889,88 5.87101667,88 L85.1294889,88 C88.3716167,88 91,85.3735189 91,82.1327271 L91,5.8667677 C91,2.62698631 88.3716167,0 85.1294889,0 Z" id="Shape" fill="#ECEAE0"></path>
+            <path d="M80.6109711,6 L10.3890289,6 C7.96503516,6 6,7.97282318 6,10.4064239 L6,53 L85,53 L85,10.4064239 C85,7.97282318 83.0349648,6 80.6109711,6 Z" id="Shape" fill="#98DCF0"></path>
+            <polygon id="Shape" fill="#699B54" points="55.5007683 35 40 53 71 53"></polygon>
+            <path d="M52.4944793,52.3901896 L32.16738,29 L11.8397768,52.3901896 L6,52.3901896 L6,62.6168556 C6,65.0375994 7.96503516,67 10.3890289,67 L80.6109711,67 C83.0349648,67 85,65.0375994 85,62.6168556 L85,52.3896864 L52.4944793,52.3896864 L52.4944793,52.3901896 Z" id="Shape" fill="#80BB67"></path>
+            <path d="M65,21 C65,24.3137085 67.6862915,27 71,27 C74.3137085,27 77,24.3137085 77,21 C77,17.6862915 74.3137085,15 71,15 C67.6862915,15 65,17.6862915 65,21 Z" id="Shape" fill="#FFE68E"></path>
+        </g>
+    </g>
+</svg>
