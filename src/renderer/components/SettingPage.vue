@@ -15,6 +15,11 @@
                     </transition>
                 </keep-alive>
             </el-main>
+            <el-footer>
+                <div class="btn_group">
+                    <el-button></el-button>
+                </div>
+            </el-footer>
         </el-container>
     </div>
 </template>
@@ -24,13 +29,18 @@
   import ServerSetting from './ServerSetting'
 
   export default {
-    name: 'setting-page',
+    name: 'SettingPage',
     components: {NormalSetting, ServerSetting},
     mounted () {
     },
     data () {
       return {
         activeIndex: '1'
+      }
+    },
+    methods: {
+      handleSelect (key, keyPath) {
+        this.activeIndex = key
       }
     }
   }

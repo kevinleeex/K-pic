@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import SettingPage from '../components/SettingPage'
+
 Vue.use(Router)
 
 export default new Router({
@@ -13,7 +15,7 @@ export default new Router({
     {
       path: '/setting',
       name: 'setting-page',
-      component: require('@/components/SettingPage')
+      component: SettingPage
     },
     {
       path: '*',

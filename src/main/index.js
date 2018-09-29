@@ -111,7 +111,7 @@ function openWindow (url) {
     title: 'K-Pic',
     useContentSize: true,
     transparent: false,
-    frame: true,
+    frame: false,
     darkTheme: true,
     backgroundColor: '#FFFFFFFF'
   })

@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+    <div id="app">
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
@@ -11,6 +11,6 @@
 </script>
 
 <style>
-  @import url(./assets/css/main.css);
-  @import url(./assets/css/animate.css);
+    @import url(./assets/css/main.css);
+    @import url(./assets/css/animate.css);
 </style>
