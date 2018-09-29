@@ -34,7 +34,7 @@ app.on('window-all-closed', () => {
   app.quit()
 })
 
-const logo = `${__static}/img/icon.png`
+const logo = `${__static}/img/kpicTemplate.png`
 const createTray = () => {
   tray = new Tray(logo)
   tray.on('right-click', toggleMenu)

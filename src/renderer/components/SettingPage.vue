@@ -19,7 +19,7 @@
         <div class="footer">
             <div class="btn_group">
                 <el-button @click="closeSet">{{$t('m.cancel')}}</el-button>
-                <el-button type="primary">{{$t('m.confirm')}}</el-button>
+                <el-button @click="confirmSet" type="primary">{{$t('m.confirm')}}</el-button>
             </div>
         </div>
     </div>
@@ -50,6 +50,9 @@
       closeSet () {
         console.info(this.settingStatus)
         this.toggleSettingWin(false)
+      },
+      confirmSet () {
+        console.info('confirm')
       },
       ...mapActions(['toggleSettingWin'])
     }
