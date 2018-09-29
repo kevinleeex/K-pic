@@ -15,18 +15,20 @@
                     </transition>
                 </keep-alive>
             </el-main>
-            <el-footer>
-                <div class="btn_group">
-                    <el-button></el-button>
-                </div>
-            </el-footer>
         </el-container>
+        <div class="footer">
+            <div class="btn_group">
+                <el-button @click="closeSet">{{$t('m.cancel')}}</el-button>
+                <el-button type="primary">{{$t('m.confirm')}}</el-button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
   import NormalSetting from './NormalSetting'
   import ServerSetting from './ServerSetting'
+  import {mapGetters, mapActions} from 'vuex'
 
   export default {
     name: 'SettingPage',
@@ -38,14 +40,24 @@
         activeIndex: '1'
       }
     },
+    computed: {
+      ...mapGetters({settingStatus: 'getSettingWinStatus'})
+    },
     methods: {
       handleSelect (key, keyPath) {
         this.activeIndex = key
-      }
+      },
+      closeSet () {
+        console.info(this.settingStatus)
+        this.toggleSettingWin(false)
+      },
+      ...mapActions(['toggleSettingWin'])
     }
   }
 </script>
 
-<style scoped>
-
+<style>
+    body {
+        -webkit-app-region: drag
+    }
 </style>

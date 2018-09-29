@@ -9,5 +9,7 @@ export const m = {
   version: '版本',
   intro: '「一个简便的图床上传工具」',
   common: '常规',
-  server: '服务器'
+  server: '服务器',
+  cancel: '取消',
+  confirm: '确认'
 }

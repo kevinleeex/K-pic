@@ -9,5 +9,7 @@ export const m = {
   version: 'Version',
   intro: '"A Simple Image Uploader for Cloud Storage"',
   common: 'Common',
-  server: 'Server'
+  server: 'Server',
+  cancel: 'Cancel',
+  confirm: 'Apply'
 }

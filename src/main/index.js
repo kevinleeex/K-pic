@@ -109,6 +109,7 @@ function openWindow (url) {
     height: 500,
     width: 350,
     title: 'K-Pic',
+    show: false,
     useContentSize: true,
     transparent: false,
     frame: false,
@@ -117,6 +118,9 @@ function openWindow (url) {
   })
 
   win.loadURL(url)
+  win.once('ready-to-show', () => {
+    win.show()
+  })
 
   win.on('closed', () => {
     settingWin = null
