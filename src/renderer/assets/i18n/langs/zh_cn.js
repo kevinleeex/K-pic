@@ -14,12 +14,14 @@ export const m = {
   confirm: '确认',
   limit: '历史条目数量',
   workWith: '正在使用',
-  service: '服务商',
-  bucket: 'Bucket',
-  secretId: 'Secret ID',
-  secretKey: 'Secret Key',
-  region: 'Region',
-  configId: 'Config ID',
-  configName: '名称',
+  labelConfig: {
+    serviceType: '服务商',
+    bucket: 'Bucket',
+    secretId: 'Secret ID',
+    secretKey: 'Secret Key',
+    region: 'Region',
+    id: 'Config ID',
+    name: '配置名称'
+  },
   language: '语言'
 }

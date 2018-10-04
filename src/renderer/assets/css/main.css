@@ -15,3 +15,8 @@ body{
 .fifty-shades{
     color: #666666;
 }
+
+
+.no_drag {
+    -webkit-app-region: no-drag !important;
+}

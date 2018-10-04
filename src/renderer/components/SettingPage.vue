@@ -15,7 +15,7 @@
                 </keep-alive>
             </el-main>
         </el-container>
-        <div class="footer">
+        <div class="footer" style="position: fixed; ">
             <div class="btn_group">
                 <el-button @click="closeSet">{{$t('m.cancel')}}</el-button>
                 <el-button @click="confirmSet" type="primary">{{$t('m.confirm')}}</el-button>
@@ -65,4 +65,5 @@
     body {
         -webkit-app-region: drag
     }
+
 </style>

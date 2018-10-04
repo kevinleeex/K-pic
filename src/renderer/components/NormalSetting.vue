@@ -93,9 +93,6 @@
         height: 30px;
     }
 
-    .no_drag {
-        -webkit-app-region: no-drag !important;
-    }
 
     .limit_button input {
         width: 100px;

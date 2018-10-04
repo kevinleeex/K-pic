@@ -54,13 +54,10 @@ const createTray = () => {
 const getWindowPosition = () => {
   const windowBounds = window.getBounds()
   const trayBounds = tray.getBounds()
-
   // Center window horizontally below the tray icon
   const x = Math.round(trayBounds.x + (trayBounds.width / 2) - (windowBounds.width / 2))
-
   // Position window 4 pixels vertically below the tray icon
   const y = Math.round(trayBounds.y + trayBounds.height + 4)
-
   return {
     x: x,
     y: y
@@ -106,11 +103,12 @@ const toggleMenu = () => {
 
 function openWindow (url) {
   const win = new BrowserWindow({
-    height: 320,
-    width: 450,
+    height: 480,
+    width: 720,
     title: 'K-Pic',
     show: false,
     useContentSize: true,
+    alwaysOnTop: true,
     transparent: false,
     frame: false,
     darkTheme: true,

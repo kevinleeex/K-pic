@@ -14,12 +14,14 @@ export const m = {
   confirm: 'Apply',
   limit: 'History limit',
   workWith: 'Work with',
-  service: 'Service',
-  bucket: 'Bucket',
-  secretId: 'Secret ID',
-  secretKey: 'Secret Key',
-  region: 'Region',
-  configId: 'Config ID',
-  configName: 'Config Name',
+  labelConfig: {
+    serviceType: 'Service',
+    bucket: 'Bucket',
+    secretId: 'Secret ID',
+    secretKey: 'Secret Key',
+    region: 'Region',
+    id: 'Config ID',
+    name: 'Config Name'
+  },
   language: 'Language'
 }
