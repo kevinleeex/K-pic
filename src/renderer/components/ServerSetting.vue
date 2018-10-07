@@ -128,7 +128,8 @@
         currentRow: null,
         serverDetail: null,
         saveHidden: true,
-        detailHiddenStatus: true
+        detailHiddenStatus: true,
+        editStatus: false
       }
     },
     computed: {
@@ -163,9 +164,16 @@
       },
       handleEdit (index, row) {
         console.log(index, row)
+        this.curItem = index
+        this.editStatus = true // set to edit status
+        this.saveHidden = false
       },
       handleDelete (index, row) {
         console.log(index, row)
+        this.serverDel(index)
+        let server = JSON.parse(JSON.stringify(serverTemplate))
+        this.copyList(server, this.serverDetail)
+        this.detailHiddenStatus = true
       },
       handleCurrentChange (row) {
         console.info('Selected: ' + JSON.stringify(row))
@@ -190,14 +198,18 @@
         this.saveHidden = false
         // this.serverAdd(server)
       },
-      delServer (index) {
-
-      },
       saveServer () {
         console.info(JSON.stringify(this.serverDetail))
         let newServer = {}
         this.copyList(this.serverDetail, newServer)
-        this.serverAdd(newServer)
+        if (this.editStatus) {
+          this.serverEdit({index: this.curItem, data: newServer})
+          this.saveHidden = true
+          this.editStatus = false
+          return
+        } else {
+          this.serverAdd(newServer)
+        }
         this.detailHiddenStatus = true
         this.saveHidden = true
       },

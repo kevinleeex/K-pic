@@ -70,9 +70,9 @@ const mutations = {
     console.info('Delete: ' + index)
     state.serverList.splice(index, 1)
   },
-  [types.EDIT_SERVER] (state, index, data) {
-    console.info('Edit: index' + index)
-    state.serverList[index] = data
+  [types.EDIT_SERVER] (state, data) {
+    console.info('Edit: index ' + data.index)
+    state.serverList[data.index] = data.data
   }
 
 }
