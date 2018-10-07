@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 const {
   app,
   BrowserWindow,
   ipcMain,
   Tray
 } = require('electron')
-
+const {control} = require('./control')
 let tray
 let window
 let settingWin
@@ -35,6 +36,7 @@ app.on('window-all-closed', () => {
 })
 
 const logo = `${__static}/img/kpicTemplate.png`
+
 const createTray = () => {
   tray = new Tray(logo)
   tray.on('right-click', toggleMenu)
@@ -101,10 +103,10 @@ const toggleWindow = () => {
 const toggleMenu = () => {
 }
 
-function openWindow (url) {
+const openWindow = (url) => {
   const win = new BrowserWindow({
     height: 480,
-    width: 720,
+    width: 850,
     title: 'K-Pic',
     show: false,
     useContentSize: true,
@@ -148,4 +150,12 @@ ipcMain.on('open-setting-win', (event, url) => {
 
 ipcMain.on('close-setting-win', (event) => {
   settingWin.close()
+})
+
+ipcMain.on('load-config', (event) => {
+  control.loadConfig(event)
+})
+
+ipcMain.on('save-config', (event, arg) => {
+  control.saveConfig(event, arg)
 })

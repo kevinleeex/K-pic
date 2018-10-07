@@ -9,7 +9,22 @@
                     <div style="width: 70%">
                         <el-select class="set_button limit_button" v-model="hValue" placeholder="--">
                             <el-option
-                                    v-for="item in limits"
+                                    v-for="item in historyLimit"
+                                    :key="item.key"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+
+                <div class="k_item is-centered no_drag" style="display: flex">
+                    <div class="label_container" style="width: 30%"><span
+                            class="fifty-shades">{{$t('m.imgSizeLimit')}}</span></div>
+                    <div style="width: 70%">
+                        <el-select class="set_button limit_button" v-model="iValue" filterable placeholder="--">
+                            <el-option
+                                    v-for="item in imgSize"
                                     :key="item.key"
                                     :label="item.label"
                                     :value="item.value">
@@ -53,7 +68,11 @@
 </template>
 
 <script>
-  let limits = [{
+  /* eslint-disable no-unused-vars */
+
+  import {mapActions, mapGetters} from 'vuex'
+
+  let historyLimit = [{
     value: '100',
     label: '100'
   }, {
@@ -69,20 +88,66 @@
     value: '0',
     label: '0'
   }]
+  let imgSize = [{value: '2', label: '2M'}, {value: '5', label: '5M'}, {value: '10', label: '10M'}, {
+    value: '20',
+    label: '20M'
+  }, {value: '-1', label: 'Unlimited'}]
   let servers = [{value: '100', label: '100'}]
   let langs = [{value: 'en', label: 'English'}, {value: 'zh_cn', label: '简体中文'}, {value: 'zh_hk', label: '繁體中文'}]
   export default {
     name: 'NormalSetting',
     data () {
+      let serverList = this.getServerList
       return {
         labelPosition: 'left',
-        limits: limits,
-        hValue: '100',
-        servers: servers,
+        historyLimit: historyLimit,
+        hValue: '',
+        imgSize: imgSize,
+        iValue: '',
+        servers: serverList,
         sValue: '',
         langs: langs,
-        lValue: 'en'
+        lValue: ''
       }
+    },
+    computed: {
+      ...mapGetters(['getCurServer', 'getCommonSet', 'getServerList']),
+      commonConfig: function () {
+        return {
+          commonSet: {
+            language: this.lValue,
+            historyLimit: this.hValue,
+            imgSizeLimit: this.iValue,
+            workWith: this.sValue
+          }
+        }
+      }
+    },
+    watch: {
+      hValue: function () {
+        this.setCommonConfig(this.commonConfig)
+      },
+      iValue: function () {
+        this.setCommonConfig(this.commonConfig)
+      },
+      sValue: function () {
+        this.setCommonConfig(this.commonConfig)
+      },
+      lValue: function () {
+        this.setCommonConfig(this.commonConfig)
+      }
+    },
+    mounted: function () {
+      this.initConfig()
+    },
+    methods: {
+      initConfig () {
+        this.hValue = this.getCommonSet.historyLimit
+        this.iValue = this.getCommonSet.imgSizeLimit
+        this.sValue = this.getCommonSet.workWith
+        this.lValue = this.getCommonSet.language
+      },
+      ...mapActions(['setCommonConfig'])
     }
   }
 </script>
@@ -92,7 +157,6 @@
     input.el-input__inner {
         height: 30px;
     }
-
 
     .limit_button input {
         width: 100px;

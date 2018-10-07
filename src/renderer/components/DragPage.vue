@@ -2,14 +2,17 @@
     <div id="wrapper">
         <main>
             <div class="head_bar"></div>
-            <div class="title_container">
+            <div class="title_container no_drag">
                 <div class="app_title" @click="open('http:lidengju.com')">K-Pic</div>
             </div>
-            <div id="drag_area" class="drag_area">
+            <div id="drag_area" class="drag_area no_drag">
                 <div class="drag_container"><img class="drag_img" src="../assets/icons/drag_img.svg"></div>
                 <div class="drag_text"><p>{{$t('m.drag')}}</p></div>
+                <div class="server_info"><span>{{$t('m.workWith')}}</span><br><span
+                        :class="{'error': (getCurServer.name==='')}">{{(getCurServer.name==='')?$t('m.tips.unset'):getCurServer.name}}</span>
+                </div>
             </div>
-            <div id="back_container">
+            <div id="back_container" class="no_drag">
                 <el-button class="btn_back" type="danger" :disabled="btnActive" round>{{$t('m.rollback')}}</el-button>
             </div>
             <div class="scale_history">
@@ -68,20 +71,12 @@
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
+  import {mapState, mapGetters, mapActions} from 'vuex'
+  import {sender, reciever} from '../utils/pipeline'
 
   export default {
     name: 'drag-page',
     components: {},
-    methods: {
-      ...mapActions(['toggleSettingWin']),
-      open (link) {
-        this.$electron.shell.openExternal(link)
-      },
-      setting () {
-        this.toggleSettingWin(true)
-      }
-    },
     data () {
       return {
         btnActive: true,
@@ -110,17 +105,45 @@
         }, {i_name: 'Electron-Vue', i_url: 'https://github.com/SimulatedGREG/electron-vue'}, {
           i_name: 'Vue-CLI',
           i_url: 'https://cli.vuejs.org/'
-        }, {
+        }, {i_name: 'Electron-json-storage', i_url: 'https://github.com/electron-userland/electron-json-storage'}, {
           i_name: 'Vue Router',
           i_url: 'https://router.vuejs.org/'
-        }, {
-          i_name: 'Axios',
-          i_url: 'https://github.com/axios/axios'
         }, {i_name: 'Vuex', i_url: 'https://vuex.vuejs.org/'}, {
           i_name: 'Element-UI',
           i_url: 'https://element.eleme.io/'
         }]
       }
+    },
+    computed: {
+      ...mapGetters(['getCurServer']),
+      ...mapState(['curServer'])
+    },
+    methods: {
+      ...mapActions([
+        'toggleSettingWin', 'setConfig']),
+      open (link) {
+        this.$electron.shell.openExternal(link)
+      },
+      setting () {
+        this.toggleSettingWin(true)
+      }
+    },
+    mounted: function () {
+      sender.loadConfig()
+      reciever.getConfig((data) => {
+        // console.info('data: ' + data['code'])
+        if (!data['state']) {
+          this.$notify({
+            title: this.$t('m.tips.warning'),
+            message: this.$t('m.tips.unsetConfig'),
+            duration: 2000,
+            type: 'warning'
+          })
+        } else {
+          this.setConfig(data['data'])
+        }
+      })
+      // console.info('test! ' + this.getCurServer)
     }
   }
 </script>
@@ -145,6 +168,19 @@
 
     li.is-disabled:hover {
         cursor: default;
+    }
+
+    .error {
+        color: #b6182c;
+    }
+
+    .server_info {
+        position: fixed;
+        width: 60px;
+        right: 60px;
+        top: 100px;
+        color: #666666;
+        font-size: small;
     }
 
     .el-dialog__body {
@@ -357,5 +393,9 @@
         );
         height: 100vh;
         width: 100vw;
+    }
+
+    .no_drag {
+        -webkit-app-region: no-drag !important;
     }
 </style>

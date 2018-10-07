@@ -5,7 +5,7 @@ import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 
 // get language from the local storage or en as default.
-let language = localStorage.lang = 'zh_cn'
+let language = localStorage.lang = 'en'
 console.info(language)
 const i18n = new VueI18n({
   locale: language || 'en',

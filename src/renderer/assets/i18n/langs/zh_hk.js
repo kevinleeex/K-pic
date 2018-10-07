@@ -13,6 +13,7 @@ export const m = {
   cancel: '取消',
   confirm: '確定',
   limit: '歷史記錄數目',
+  imgSizeLimit: '圖片大小限制',
   workWith: '使用服務',
   labelConfig: {
     serviceType: '服務商',
@@ -23,5 +24,14 @@ export const m = {
     id: '配置ID',
     name: '配置名稱'
   },
-  language: '語言'
+  language: '語言',
+  tips: {
+    warning: '警告',
+    unsetConfig: '伺服器沒有正確配置',
+    unset: '未配置',
+    edit: '編輯',
+    delete: '刪除',
+    operation: '操作',
+    save: '存儲'
+  }
 }

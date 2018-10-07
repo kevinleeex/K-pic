@@ -13,6 +13,7 @@ export const m = {
   cancel: 'Cancel',
   confirm: 'Apply',
   limit: 'History limit',
+  imgSizeLimit: 'Image Size limit',
   workWith: 'Work with',
   labelConfig: {
     serviceType: 'Service',
@@ -23,5 +24,14 @@ export const m = {
     id: 'Config ID',
     name: 'Config Name'
   },
-  language: 'Language'
+  language: 'Language',
+  tips: {
+    warning: 'Warning',
+    unsetConfig: 'Server configuration is not set.',
+    unset: 'unset',
+    edit: 'Edit',
+    delete: 'Delete',
+    operation: 'Operation',
+    save: 'Save'
+  }
 }

@@ -1,5 +1,5 @@
 import * as types from '../mutation-types'
-import {showWin} from '../../utils/sender'
+import {showWin} from '../../utils/pipeline'
 
 const state = {
   showSettingWin: false

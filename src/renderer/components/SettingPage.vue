@@ -8,11 +8,13 @@
                 </el-menu>
             </el-header>
             <el-main>
-                <keep-alive>
+
                     <transition name="component-fade" mode="out-in">
+                        <keep-alive>
                         <component :is="viewName"></component>
+                        </keep-alive>
                     </transition>
-                </keep-alive>
+
             </el-main>
         </el-container>
         <div class="footer" style="position: fixed; ">
@@ -25,15 +27,15 @@
 </template>
 
 <script>
+  /* eslint-disable no-unused-vars */
   import NormalSetting from './NormalSetting'
   import ServerSetting from './ServerSetting'
   import {mapGetters, mapActions} from 'vuex'
+  import {sender, reciever} from '../utils/pipeline'
 
   export default {
     name: 'SettingPage',
     components: {'normal': NormalSetting, 'server': ServerSetting},
-    mounted () {
-    },
     data () {
       return {
         viewName: 'normal',
@@ -41,9 +43,15 @@
       }
     },
     computed: {
-      ...mapGetters({settingStatus: 'getSettingWinStatus'})
+      ...mapGetters(['getSettingWinStatus'])
+    },
+    mounted: function () {
     },
     methods: {
+      setConfig2Store () {
+        let data = {}
+        sender.saveConfig(data)
+      },
       handleSelect (key, keyPath) {
         const viewList = ['normal', 'server']
         this.activeIndex = key

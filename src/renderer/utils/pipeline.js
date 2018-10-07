@@ -1,14 +1,25 @@
 import {ipcRenderer} from 'electron'
-// import {session} from '@/utils/storage'
 
 export const sender = {
   openSetting () {
-    let a = `${window.location.origin}/setting`
-    console.info(a)
     ipcRenderer.send('open-setting-win', `${window.location.origin}/#/setting`)
   },
   closeSetting () {
     ipcRenderer.send('close-setting-win')
+  },
+  loadConfig () {
+    ipcRenderer.send('load-config')
+  },
+  saveConfig (arg) {
+    ipcRenderer.send('save-config', arg)
+  }
+}
+
+export const reciever = {
+  getConfig (callback) {
+    ipcRenderer.on('on-load', (event, arg) => {
+      callback(arg)
+    })
   }
 }
 
