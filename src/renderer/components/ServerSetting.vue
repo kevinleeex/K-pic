@@ -54,7 +54,7 @@
                                     <el-col :span="2"></el-col>
                                     <el-col :span="6">{{labelConfig.type}}</el-col>
                                     <el-col :span="8">
-                                        <el-select v-model="stValue" placeholder="--">
+                                        <el-select v-model="serverDetail.type" placeholder="--">
                                             <el-option
                                                     v-for="item in serviceOptions"
                                                     :key="item.stValue"
@@ -137,16 +137,6 @@
       serverList: function () {
         return this.getServerList
       }
-      // serverDetail: function () {
-      //   return (this.serverList.length === 0) ? {
-      //     name: '',
-      //     type: 'COS',
-      //     secretId: '',
-      //     secretKey: '',
-      //     region: '',
-      //     bucket: ''
-      //   } : this.currentRow
-      // }
     },
     created: function () {
       this.serverDetail = {
@@ -176,27 +166,19 @@
         this.detailHiddenStatus = true
       },
       handleCurrentChange (row) {
-        console.info('Selected: ' + JSON.stringify(row))
+        // console.info('Selected: ' + JSON.stringify(row))
         this.currentRow = row
         this.detailHiddenStatus = false
         this.saveHidden = true
         this.copyList(row, this.serverDetail)
-        // for (let attr in row) {
-        //   this.serverDetail[attr] = row[attr]
-        // }
-        // this.serverDetail = row
       },
       addServer () {
         console.info('add')
         this.blurSelect()
         let server = JSON.parse(JSON.stringify(serverTemplate))
-        // for (let attr in server) {
-        //   this.serverDetail[attr] = server[attr]
-        // }
         this.copyList(server, this.serverDetail)
         this.detailHiddenStatus = false
         this.saveHidden = false
-        // this.serverAdd(server)
       },
       saveServer () {
         console.info(JSON.stringify(this.serverDetail))
@@ -204,13 +186,11 @@
         this.copyList(this.serverDetail, newServer)
         if (this.editStatus) {
           this.serverEdit({index: this.curItem, data: newServer})
-          this.saveHidden = true
           this.editStatus = false
-          return
         } else {
           this.serverAdd(newServer)
+          this.detailHiddenStatus = true
         }
-        this.detailHiddenStatus = true
         this.saveHidden = true
       },
       copyList (src, target) {

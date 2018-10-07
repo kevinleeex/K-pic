@@ -49,24 +49,23 @@ export const control = {
     }
 
     let retMsg
-    storage.set('appConfig', config).then(() => {
-      storage.get('appConfig').then(val => {
-        if (val.serverList === config.serverList) {
-          console.log('Save succeed.')
-          retMsg = {
-            state: true,
-            code: 200
-          }
-          event.sender.send('on-save', retMsg)
-        } else {
-          console.log('Save failed.')
-          retMsg = {
-            state: false,
-            code: 500
-          }
-          event.sender.send('on-save', retMsg)
+    storage.set('appConfig', config, function (error) {
+      if (error) {
+        console.log('Save failed.')
+        retMsg = {
+          state: false,
+          code: 500
         }
-      })
+        event.sender.send('on-save', retMsg)
+        // throw error
+      } else {
+        console.log('Save succeed.')
+        retMsg = {
+          state: true,
+          code: 200
+        }
+        event.sender.send('on-save', retMsg)
+      }
     })
   }
 }

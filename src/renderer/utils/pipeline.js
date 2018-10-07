@@ -20,6 +20,11 @@ export const reciever = {
     ipcRenderer.on('on-load', (event, arg) => {
       callback(arg)
     })
+  },
+  resSaveConfig (callback) {
+    ipcRenderer.on('on-save', (event, arg) => {
+      callback(arg)
+    })
   }
 }
 

@@ -9,11 +9,11 @@
             </el-header>
             <el-main>
 
-                    <transition name="component-fade" mode="out-in">
-                        <keep-alive>
+                <transition name="component-fade" mode="out-in">
+                    <keep-alive>
                         <component :is="viewName"></component>
-                        </keep-alive>
-                    </transition>
+                    </keep-alive>
+                </transition>
 
             </el-main>
         </el-container>
@@ -43,13 +43,15 @@
       }
     },
     computed: {
-      ...mapGetters(['getSettingWinStatus'])
+      ...mapGetters(['getSettingWinStatus', 'getCurServer', 'getCommonSet', 'getServerList'])
     },
     mounted: function () {
     },
     methods: {
-      setConfig2Store () {
-        let data = {}
+      saveConfig2Local () {
+        // save the setting as the config file and save in local.
+        console.info('Save!!!')
+        let data = {commonSet: this.getCommonSet, curServer: this.getCurServer, serverList: this.getServerList}
         sender.saveConfig(data)
       },
       handleSelect (key, keyPath) {
@@ -63,6 +65,8 @@
       },
       confirmSet () {
         console.info('confirm')
+        this.saveConfig2Local()
+        // this.toggleSettingWin(false)
       },
       ...mapActions(['toggleSettingWin'])
     }

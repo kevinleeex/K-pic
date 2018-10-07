@@ -37,7 +37,9 @@
                     <div class="label_container" style="width: 30%"><span
                             class="fifty-shades">{{$t('m.workWith')}}</span></div>
                     <div style="width: 70%">
-                        <el-select class="set_button limit_button" v-model="sValue" filterable placeholder="--">
+                        <el-select class="set_button limit_button" v-model="sValue" @focus="getServerNames"
+                                   @blur="getServerNames" filterable
+                                   placeholder="--">
                             <el-option
                                     v-for="item in servers"
                                     :key="item.key"
@@ -97,14 +99,12 @@
   export default {
     name: 'NormalSetting',
     data () {
-      let serverList = this.getServerList
       return {
-        labelPosition: 'left',
         historyLimit: historyLimit,
         hValue: '',
         imgSize: imgSize,
         iValue: '',
-        servers: serverList,
+        servers: this.serverNameList,
         sValue: '',
         langs: langs,
         lValue: ''
@@ -112,6 +112,18 @@
     },
     computed: {
       ...mapGetters(['getCurServer', 'getCommonSet', 'getServerList']),
+      serverNameList: function () {
+        // get the server name list.
+        let names = []
+        for (let ix in this.getServerList) {
+          let obj = {value: this.getServerList[ix].name, label: this.getServerList[ix].name}
+          names.push(obj)
+        }
+        if (names.length === 0) {
+          this.sValue = ''
+        }
+        return names
+      },
       commonConfig: function () {
         return {
           commonSet: {
@@ -119,6 +131,25 @@
             historyLimit: this.hValue,
             imgSizeLimit: this.iValue,
             workWith: this.sValue
+          }
+        }
+      },
+      curServer: function () {
+        let index = this.sValue
+        for (let ix in this.getServerList) {
+          if (this.getServerList[ix].name === index) {
+            return {curServer: this.getServerList[ix]}
+          }
+        }
+        return {
+          curServer: {
+            id: '',
+            name: '',
+            type: '',
+            secretId: '',
+            secretKey: '',
+            region: '',
+            bucket: ''
           }
         }
       }
@@ -132,6 +163,7 @@
       },
       sValue: function () {
         this.setCommonConfig(this.commonConfig)
+        this.setServerWorkWith(this.curServer)
       },
       lValue: function () {
         this.setCommonConfig(this.commonConfig)
@@ -141,13 +173,21 @@
       this.initConfig()
     },
     methods: {
+      getServerNames () {
+        console.info('getServerNames!!')
+        this.servers = this.serverNameList
+        this.setServerWorkWith(this.curServer)
+      },
       initConfig () {
         this.hValue = this.getCommonSet.historyLimit
         this.iValue = this.getCommonSet.imgSizeLimit
         this.sValue = this.getCommonSet.workWith
         this.lValue = this.getCommonSet.language
       },
-      ...mapActions(['setCommonConfig'])
+      setServerWorkWith (config) {
+        this.setCurServer(config)
+      },
+      ...mapActions(['setCommonConfig', 'setCurServer'])
     }
   }
 </script>

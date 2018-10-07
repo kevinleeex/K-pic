@@ -7,3 +7,4 @@ export const GET_CONFIG = 'GET_CONFIG' // get the data of app config
 export const ADD_SERVER = 'ADD_SERVER' // add server
 export const DEL_SERVER = 'DEL_SERVER' // delete server
 export const EDIT_SERVER = 'EDIT_SERVER' // edit server
+export const SET_CUR_SERVER = 'SET_CUR_SERVER' // set current server.
