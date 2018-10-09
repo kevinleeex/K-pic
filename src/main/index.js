@@ -32,7 +32,7 @@ const winURL = process.env.NODE_ENV === 'development'
 
 const setURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080/#/setting`
-  : `file://${__dirname}/#/setting`
+  : `file://${__dirname}/index.html#setting` // this is a trick to write the url
 
 // Hide the app in dock on Mac
 app.dock.hide()

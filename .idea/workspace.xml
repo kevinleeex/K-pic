@@ -5,24 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9596e18-2d97-4812-be98-346314ad7d05" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/app.icns" beforeDir="false" afterPath="$PROJECT_DIR$/build/icons/icon.icns" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/app.ico" beforeDir="false" afterPath="$PROJECT_DIR$/build/icons/icon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/app.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/icons/512x512.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/control.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/control.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/uploader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/uploader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/assets/i18n/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/assets/i18n/i18n.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/assets/i18n/langs/en.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/assets/i18n/langs/en.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/assets/i18n/langs/zh_cn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/assets/i18n/langs/zh_cn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/assets/i18n/langs/zh_hk.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/assets/i18n/langs/zh_hk.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/DragPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/DragPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/SettingPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/SettingPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/utils/pipeline.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/utils/pipeline.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/png/app.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/png/app.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/png/app@0.25x.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/png/app@0.25x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/png/app@0.5x.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/png/app@0.5x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/png/app@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/png/app@2x.png" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -58,7 +41,7 @@
           <entry key="gitignore" value="3" />
           <entry key="icns" value="5" />
           <entry key="ico" value="3" />
-          <entry key="js" value="305" />
+          <entry key="js" value="309" />
           <entry key="json" value="11" />
           <entry key="md" value="6" />
           <entry key="png" value="12" />
@@ -74,7 +57,7 @@
           <entry key="CSS" value="9" />
           <entry key="Image" value="20" />
           <entry key="JSON" value="11" />
-          <entry key="JavaScript" value="305" />
+          <entry key="JavaScript" value="309" />
           <entry key="Markdown" value="6" />
           <entry key="PLAIN_TEXT" value="6" />
           <entry key="SVG" value="3" />
@@ -93,7 +76,7 @@
         <counts>
           <entry key="css" value="250" />
           <entry key="gitignore" value="7" />
-          <entry key="js" value="13643" />
+          <entry key="js" value="13719" />
           <entry key="json" value="17" />
           <entry key="md" value="86" />
           <entry key="vue" value="22363" />
@@ -105,7 +88,7 @@
           <entry key="CSS" value="250" />
           <entry key="JSON" value="20" />
           <entry key="JSON5" value="3" />
-          <entry key="JavaScript" value="13645" />
+          <entry key="JavaScript" value="13721" />
           <entry key="Markdown" value="80" />
           <entry key="PLAIN_TEXT" value="7" />
           <entry key="Vue.js" value="22361" />
@@ -117,13 +100,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="95">
-                <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-              </first_editor>
-              <second_editor />
+        <entry file="file://$PROJECT_DIR$/src/main/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="34" column="80" selection-start-line="34" selection-start-column="80" selection-end-line="34" selection-end-column="80" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -189,12 +172,12 @@
         <option value="$PROJECT_DIR$/src/renderer/assets/i18n/langs/zh_hk.js" />
         <option value="$PROJECT_DIR$/src/renderer/assets/i18n/langs/zh_cn.js" />
         <option value="$PROJECT_DIR$/src/renderer/store/modules/server.js" />
-        <option value="$PROJECT_DIR$/src/main/index.js" />
         <option value="$PROJECT_DIR$/src/renderer/assets/i18n/i18n.js" />
         <option value="$PROJECT_DIR$/src/main/control.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/SettingPage.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/DragPage.vue" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/main/index.js" />
       </list>
     </option>
   </component>
@@ -217,8 +200,6 @@
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
-      <path value="$PROJECT_DIR$/build/mac/k-pic.app/Contents/Resources/app.asar.unpacked/node_modules/cnpm/node_modules/npm/node_modules/term-size/package.json" />
-      <path value="$PROJECT_DIR$/build/mac/k-pic.app/Contents/Resources/app.asar.unpacked/node_modules/update-notifier/node_modules/boxen/node_modules/term-size/package.json" />
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
@@ -247,6 +228,22 @@
             <path>
               <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
               <item name="k-pic" type="462c0819:PsiDirectoryNode" />
+              <item name=".electron-vue" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
+              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
+              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="mac" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
+              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -254,56 +251,6 @@
               <item name="k-pic" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="i18n" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="store" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="store" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="k-pic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k-pic" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -374,12 +321,12 @@
       <workItem from="1538710478314" duration="37488000" />
       <workItem from="1538873164677" duration="76784000" />
       <workItem from="1539017615708" duration="33488000" />
-      <workItem from="1539102036743" duration="6395000" />
+      <workItem from="1539102036743" duration="7433000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="273709000" />
+    <option name="totallyTimeSpent" value="274747000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -394,7 +341,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20577872" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20577872" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -409,7 +356,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3698795" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3698795" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -608,23 +555,6 @@
     <entry file="file://$PROJECT_DIR$/.electron-vue/webpack.web.config.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/.electron-vue/dev-runner.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.electron-vue/dev-client.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.electron-vue/build.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-51">
-          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/assets/i18n/langs/en.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -660,16 +590,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -755,6 +675,33 @@
             <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.electron-vue/build.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1535">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.electron-vue/dev-client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-19">
+          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.electron-vue/dev-runner.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="34" column="80" selection-start-line="34" selection-start-column="80" selection-end-line="34" selection-end-column="80" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
