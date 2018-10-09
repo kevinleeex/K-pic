@@ -129,6 +129,7 @@
           let obj = {value: this.getServerList[ix].name, label: this.getServerList[ix].name}
           names.push(obj)
         }
+        names.push({value: '', label: '--'})
         if (names.length === 0) {
           this.sValue = ''
         }

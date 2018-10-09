@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 export const m = {
   hello: '你好，世界！',
-  drag: '拖動到這裡上傳',
-  rollback: '撤銷',
   scale: '縮放',
   history: '歷史記錄',
   power: '驅動',
@@ -42,6 +40,13 @@ export const m = {
     operation: '操作',
     save: '存儲',
     donate: '捐助我',
-    thanks: '你嘅幫助，系我前行嘅動力，多謝你慷慨嘅捐助'
+    thanks: '你嘅幫助，系我前行嘅動力，多謝你慷慨嘅捐助',
+    drag: '拖動到這裡上傳',
+    drop: '放下即上傳',
+    uploading: '上傳中...',
+    resting: '空閒中',
+    rollback: '撤銷',
+    markOn: 'Markdown 格式啟用',
+    markOff: 'Markdown 格式關閉'
   }
 }

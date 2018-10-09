@@ -118,10 +118,16 @@
         },
         serviceOptions: [{
           stValue: 'COS',
-          stLabel: 'COS'
+          stLabel: 'Tencent-COS'
         }, {
-          stValue: 'OOS',
-          stLabel: 'OOS'
+          stValue: 'OSS',
+          stLabel: 'AliYun-OSS'
+        }, {
+          stValue: 'QN',
+          stLabel: 'QiNiu'
+        }, {
+          stValue: 'AWS',
+          stLabel: 'Amazon-S3'
         }],
         stValue: 'COS',
         curItem: 0,

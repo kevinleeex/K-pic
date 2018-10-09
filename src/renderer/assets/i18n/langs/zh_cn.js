@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 export const m = {
   hello: '你好，世界！',
-  drag: '拖拽到这里上传',
-  rollback: '撤销',
   scale: '缩放',
   history: '历史记录',
   power: '驱动',
@@ -41,7 +39,14 @@ export const m = {
     delete: '删除',
     operation: '操作',
     save: '保存',
-    donate: '打赏我',
-    thanks: '您的帮助是我前行的动力,感谢您慷慨的捐助!'
+    donate: '捐贈我',
+    thanks: '您的帮助是我前行的动力,感谢您慷慨的捐助!',
+    drag: '拖拽到这里上传',
+    drop: '放下上传',
+    uploading: '上传中...',
+    resting: '空闲',
+    rollback: '撤销',
+    markOn: 'Markdown 格式启用',
+    markOff: 'Markdown 格式关闭'
   }
 }

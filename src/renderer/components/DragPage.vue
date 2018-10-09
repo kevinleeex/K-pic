@@ -5,20 +5,21 @@
             <div class="title_container no_drag">
                 <div class="app_title" @click="open('http:lidengju.com')">K-Pic</div>
             </div>
-            <div @drop="drop2upload" id="drag_area" class="drag_area no_drag">
+            <div @dragleave="dragLeave" @mouseleave="dragLeave" @dragover="dragOver" @drop="drop2upload" id="drag_area"
+                 class="drag_area no_drag">
                 <div class="drag_container"><img class="drag_img" src="../assets/icons/drag_img.svg"></div>
-                <div class="drag_text"><p>{{$t('m.drag')}}</p></div>
-                <div class="server_info"><span>{{$t('m.workWith')}}</span><br><span
-                        :class="{'error': (currentServer.name==='')}">{{(currentServer.name==='')?$t('m.tips.unset'):currentServer.name}}</span>
-                </div>
+                <div class="drag_text"><p>{{dragTips}}</p></div>
+            </div>
+            <div class="server_info note_text"><b><span>{{$t('m.workWith')}}</span>: </b><span
+                    :class="{'error': (currentServer.name==='')}">{{(currentServer.name==='')?$t('m.tips.unset'):currentServer.name}}</span>
             </div>
             <div id="back_container" class="no_drag">
-                <el-button class="btn_back" type="danger" :disabled="btnActive" round>{{$t('m.rollback')}}</el-button>
+                <el-button class="btn_back" :type="signType" :disabled="btnActive" round>{{signal}}</el-button>
             </div>
-            <div class="scale_history">
+            <div class="btn_panel">
                 <el-row :gutter="20">
                     <el-col class="item item_scale" :span="12"><img class="item-img" src="../assets/icons/shape.svg">
-                        <el-select class="set_button scale_button" v-model="value" placeholder="--">
+                        <el-select class="set_button scale_button" v-model="scale" placeholder="--">
                             <el-option
                                     v-for="item in options"
                                     :key="item.key"
@@ -30,6 +31,16 @@
                     </el-col>
                     <el-col class="item item_scale" :span="12"><img class="item-img" src="../assets/icons/history.svg">
                         <el-button class="set_button history_button">{{$t('m.history')}}</el-button>
+                    </el-col>
+                </el-row>
+            </div>
+            <div class="btn_panel">
+                <el-row>
+                    <el-col class="item item_scale" :span="24"><img class="item-img"
+                                                                    src="../assets/icons/markdown.svg">
+                        <el-switch v-model="isMarkdown"
+                                   active-color="#13ce66"
+                                   inactive-color="#ff4949"></el-switch>
                     </el-col>
                 </el-row>
             </div>
@@ -62,7 +73,9 @@
                     </ul>
                 </el-main>
                 <el-footer class="info_footer">
-                    <p>©2018 | <span class="name" @click="open('http://lidengju.com/blog/about')">{{$t('m.author')}}.</span>{{$t('m.copyright')}}.</p>
+                    <p>©2018 | <span class="name"
+                                     @click="open('http://lidengju.com/blog/about')">{{$t('m.author')}}.</span>{{$t('m.copyright')}}.
+                    </p>
                 </el-footer>
             </el-container>
         </el-dialog>
@@ -78,6 +91,10 @@
     components: {},
     data () {
       return {
+        isMarkdown: true,
+        upStatus: 'resting',
+        signType: '',
+        dragTips: this.$t('m.tips.drag'),
         btnActive: true,
         dialogVisible: false,
         options: [{
@@ -97,7 +114,7 @@
           value: '0.25',
           label: '25%'
         }],
-        value: '1',
+        scale: '1',
         stack: [{i_name: 'Electron', i_url: 'https://electronjs.org/'}, {
           i_name: 'Vue.js',
           i_url: 'https://vuejs.org/'
@@ -113,8 +130,34 @@
         }]
       }
     },
+    watch: {
+      isMarkdown: function () {
+        (this.isMarkdown) ? this.$message({
+          message: this.$t('m.tips.markOn'),
+          center: true
+        }) : this.$message({message: this.$t('m.tips.markOff'), center: true})
+      }
+    },
     computed: {
       ...mapGetters(['getCurServer']),
+      signal: function () {
+        let sign = ''
+        switch (this.upStatus) {
+          case 'resting':
+            sign = this.$t('m.tips.resting')
+            this.signType = 'success'
+            break
+          case 'uploading':
+            sign = this.$t('m.tips.uploading')
+            this.signType = 'warning'
+            break
+          case 'rollback':
+            sign = this.$t('m.tips.rollback')
+            this.signType = 'danger'
+            break
+        }
+        return sign
+      },
       currentServer: function () {
         return this.getCurServer
       }
@@ -128,8 +171,48 @@
       setting () {
         this.toggleSettingWin(true)
       },
-      drop2upload () {
-
+      drop2upload (event) {
+        event.preventDefault()
+        event.stopPropagation()
+        if (this.currentServer.name === '' || this.currentServer.name === undefined) {
+          this.$notify({
+            title: this.$t('m.tips.warning'),
+            message: this.$t('m.tips.unsetConfig'),
+            duration: 2000,
+            type: 'warning'
+          })
+          return
+        }
+        let files = event.dataTransfer.files
+        let fileList = []
+        for (let f of files) {
+          console.info('File(s) you dragged to here', f.path)
+          const singleFile = {timestamp: new Date().getTime(), path: f.path}
+          fileList.push(singleFile)
+        }
+        let upData = {
+          serverInfo: this.currentServer,
+          filesInfo: fileList,
+          settingInfo: {scale: this.scale, isMarkdown: this.isMarkdown}
+        }
+        sender.upload(upData)
+        this.upStatus = 'uploading'
+        reciever.resUpload((data) => {
+          console.info('data: ' + JSON.stringify(data.data))
+          if (data.data.code === 200) {
+            this.upStatus = 'resting'
+          }
+        })
+      },
+      dragOver (event) {
+        event.preventDefault()
+        event.stopPropagation()
+        this.dragTips = this.$t('m.tips.drop')
+      },
+      dragLeave (event) {
+        event.preventDefault()
+        event.stopPropagation()
+        this.dragTips = this.$t('m.tips.drag')
       }
     },
     mounted: function () {
@@ -144,6 +227,7 @@
             type: 'warning'
           })
         } else {
+          this.$i18n.locale = data.data.commonSet.language
           this.setConfig(data['data'])
         }
       })
@@ -179,10 +263,12 @@
     }
 
     .server_info {
-        position: fixed;
-        width: 60px;
-        right: 60px;
-        top: 100px;
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+    }
+
+    .note_text {
         color: #666666;
         font-size: small;
     }
@@ -314,6 +400,7 @@
 
     .item-img {
         height: 20px;
+        margin-right: 10px;
         align-items: center;
     }
 
@@ -325,8 +412,8 @@
         border-radius: 3px;
     }
 
-    .scale_history {
-        margin: 40px;
+    .btn_panel {
+        margin: 20px;
     }
 
     #back_container {

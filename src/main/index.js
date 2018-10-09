@@ -10,6 +10,7 @@ const os = require('os')
 const path = require('path')
 const storage = require('electron-json-storage')
 const {control} = require('./control')
+const {uploader} = require('./uploader')
 let tray
 let window
 let settingWin
@@ -170,9 +171,14 @@ ipcMain.on('load-config', (event) => {
 
 ipcMain.on('save-config', (event, arg) => {
   control.saveConfig(event, arg)
-  window.webContents.reload()
+  window.webContents.reload() // reload the content after update the config
 })
 
 ipcMain.on('notify', (event, arg) => {
   control.notify(event, arg)
+})
+
+ipcMain.on('file-upload', (event, arg) => {
+  console.info('Start upload with', JSON.stringify(arg))
+  uploader.upload(event, arg)
 })

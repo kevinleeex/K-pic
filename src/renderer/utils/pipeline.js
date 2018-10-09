@@ -17,7 +17,7 @@ export const sender = {
     ipcRenderer.send('notify', arg)
   },
   upload (arg) {
-    ipcRenderer.send('upload', arg)
+    ipcRenderer.send('file-upload', arg)
   }
 }
 

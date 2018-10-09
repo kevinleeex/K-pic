@@ -1,8 +1,7 @@
+var COS = require('cos-nodejs-sdk-v5')
+var fs = require('fs')
 
-var COS = require('cos-nodejs-sdk-v5');
-var fs = require("fs");
-
-var config = fs.readFileSync('../config/COS_config.json').toString('utf-8');
+var config = fs.readFileSync('../config/COS_config.json').toString('utf-8')
 console.log(JSON.parse(config)['Bucket'])
 // 创建实例
 // var cos = new COS({

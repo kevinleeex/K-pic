@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 export const m = {
   hello: 'Hello!',
-  drag: 'Drag to here',
-  rollback: 'Rollback',
   scale: 'Scale',
   history: 'History',
   power: 'Powered by',
@@ -18,7 +16,7 @@ export const m = {
   confirm: 'Confirm',
   limit: 'History limit',
   imgSizeLimit: 'Image Size limit',
-  workWith: 'Work with',
+  workWith: 'Work on',
   author: 'Kevin T. Lee',
   copyright: 'All rights reserved',
   license: 'LICENSE',
@@ -43,6 +41,13 @@ export const m = {
     save: 'Save',
     success: 'Succeed',
     donate: 'Donate me',
-    thanks: 'Your help is what keeps me going on, and any donation is appreciated.'
+    thanks: 'Your help is what keeps me going on, and any donation is appreciated.',
+    drag: 'Drag to here',
+    drop: 'Drop to upload',
+    uploading: 'Uploading...',
+    resting: 'Resting',
+    rollback: 'Rollback',
+    markOn: 'Markdown format on',
+    markOff: 'Markdown format off'
   }
 }

@@ -13,7 +13,7 @@ export const control = {
       if (error) {
         retMsg = {
           state: false,
-          code: 403,
+          code: 400,
           msg: 'undefined',
           data: {}
         }
@@ -63,7 +63,6 @@ export const control = {
           state: false,
           code: 500
         }
-        event.sender.send('on-save', retMsg)
         // throw error
       } else {
         console.log('Save succeed.')
@@ -71,8 +70,8 @@ export const control = {
           state: true,
           code: 200
         }
-        event.sender.send('on-save', retMsg)
       }
+      event.sender.send('on-save', retMsg)
     })
   }
 }

@@ -76,11 +76,11 @@ const mutations = {
     state.serverList.push(data)
   },
   [types.DEL_SERVER] (state, index) {
-    console.info('Delete: ' + index)
+    console.info('Delete server: ' + index)
     state.serverList.splice(index, 1)
   },
   [types.EDIT_SERVER] (state, data) {
-    console.info('Edit: index ' + data.index)
+    console.info('Edit server: index ' + data.index)
     Vue.set(state.serverList, data.index, data.data) // use this rather the below
     // state.serverList[data.index] = data.data // don't use this or the value won't be updated immediately
   }

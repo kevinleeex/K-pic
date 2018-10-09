@@ -2,11 +2,13 @@ import * as types from '../mutation-types'
 import {showWin} from '../../utils/pipeline'
 
 const state = {
-  showSettingWin: false
+  showSettingWin: false,
+  historyList: [{}]
 }
 
 const getters = {
-  getSettingWinStatus: state => state.showSettingWin
+  getSettingWinStatus: state => state.showSettingWin,
+  getHostory: state => state.history
 }
 
 const actions = {
@@ -23,6 +25,14 @@ const mutations = {
       state.showSettingWin = !state.showSettingWin
     }
     showWin(showSettingWin)
+  },
+  [types.ADD_HISTORY] (state, data) {
+    console.info('add server')
+    state.historyList.push(data)
+  },
+  [types.DEL_HISTORY] (state, index) {
+    console.info('delete history: ' + index)
+    state.historyList.splice(index, 1)
   }
 }
 
