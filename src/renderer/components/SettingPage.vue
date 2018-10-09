@@ -35,6 +35,7 @@
   import About from './About'
   import {mapGetters, mapActions} from 'vuex'
   import {sender, reciever} from '../utils/pipeline'
+  import {local} from '@/utils/storage'
 
   export default {
     name: 'SettingPage',
@@ -70,7 +71,7 @@
       },
       saveConfig2Local () {
         // save the setting as the config file and save in local.
-        console.info('Save!!!' + JSON.stringify(this.getCurrentServerByName()))
+        // console.info('Save!!!' + JSON.stringify(this.getCurrentServerByName()))
         this.setCurServer({curServer: this.getCurrentServerByName()})
         let data = {commonSet: this.getCommonSet, curServer: this.getCurServer, serverList: this.getServerList}
         sender.saveConfig(data)
@@ -86,6 +87,7 @@
             notification.title = this.$t('m.tips.warning')
             notification.body = this.$t('m.tips.unsetConfig')
           }
+          local.setItem('lang', this.getCommonSet.language)
           const notificationButton = document.getElementById('basic-noti')
           const myNotification = new window.Notification(notification.title, notification)
         })
@@ -96,11 +98,10 @@
         this.viewName = viewList[key - 1]
       },
       closeSet () {
-        console.info(this.settingStatus)
+        // console.info(this.settingStatus)
         this.toggleSettingWin(false)
       },
       applySet () {
-        console.info('apply')
         this.saveConfig2Local()
         this.readConfig()
       },
@@ -123,6 +124,7 @@
               type: 'warning'
             })
           } else {
+            this.$i18n.locale = local.getItem('lang')
             this.setConfig(data['data'])
           }
         })

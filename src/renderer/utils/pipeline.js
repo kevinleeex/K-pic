@@ -2,7 +2,7 @@ import {ipcRenderer} from 'electron'
 
 export const sender = {
   openSetting () {
-    ipcRenderer.send('open-setting-win', `${window.location.origin}/#/setting`)
+    ipcRenderer.send('open-setting-win')
   },
   closeSetting () {
     ipcRenderer.send('close-setting-win')

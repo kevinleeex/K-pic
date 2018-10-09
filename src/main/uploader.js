@@ -70,8 +70,8 @@ const uploadCOS = function (server, filePro, callback) {
     FilePath: filePro.srcPath
   }, function (err, data) {
     console.log(err, data)
-    console.info(data.statusCode)
-    if (data.statusCode === 200) {
+    // console.info(data.statusCode)
+    if (err === null) {
       retData = {
         code: data.statusCode,
         serverInfo: server,

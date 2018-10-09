@@ -48,6 +48,9 @@ export const m = {
     resting: 'Resting',
     rollback: 'Rollback',
     markOn: 'Markdown format on',
-    markOff: 'Markdown format off'
+    markOff: 'Markdown format off',
+    upSucceed: 'Upload succeed',
+    upFailed: 'Upload failed',
+    upload2: 'upload to'
   }
 }

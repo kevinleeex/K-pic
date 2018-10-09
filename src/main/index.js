@@ -30,6 +30,10 @@ const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
 
+const setURL = process.env.NODE_ENV === 'development'
+  ? `http://localhost:9080/#/setting`
+  : `file://${__dirname}/#/setting`
+
 // Hide the app in dock on Mac
 app.dock.hide()
 app.on('ready', () => {
@@ -117,7 +121,7 @@ const toggleMenu = () => {
 }
 
 const openWindow = (url) => {
-  const win = new BrowserWindow({
+  settingWin = new BrowserWindow({
     height: 480,
     width: 850,
     title: 'K-Pic',
@@ -127,19 +131,24 @@ const openWindow = (url) => {
     transparent: false,
     frame: false,
     darkTheme: true,
-    backgroundColor: '#FFFFFFFF'
+    backgroundColor: '#FFFFFFFF',
+    webPreferences: {
+      // Prevents renderer process code from not running when window is
+      // hidden
+      backgroundThrottling: false
+    }
   })
 
-  win.loadURL(url)
-  win.once('ready-to-show', () => {
-    win.show()
+  settingWin.loadURL(url)
+  settingWin.once('ready-to-show', () => {
+    settingWin.show()
   })
 
-  win.on('closed', () => {
+  settingWin.on('closed', () => {
     settingWin = null
   })
 
-  return win
+  return settingWin
 }
 
 const showWindow = () => {
@@ -153,11 +162,11 @@ ipcMain.on('show-window', () => {
   showWindow()
 })
 
-ipcMain.on('open-setting-win', (event, url) => {
+ipcMain.on('open-setting-win', (event) => {
   if (settingWin) {
     settingWin.focus()
   } else {
-    settingWin = openWindow(url)
+    settingWin = openWindow(setURL)
   }
 })
 

@@ -39,6 +39,7 @@ export const m = {
     delete: '刪除',
     operation: '操作',
     save: '存儲',
+    success: '成功',
     donate: '捐助我',
     thanks: '你嘅幫助，系我前行嘅動力，多謝你慷慨嘅捐助',
     drag: '拖動到這裡上傳',
@@ -47,6 +48,9 @@ export const m = {
     resting: '空閒中',
     rollback: '撤銷',
     markOn: 'Markdown 格式啟用',
-    markOff: 'Markdown 格式關閉'
+    markOff: 'Markdown 格式關閉',
+    upSucceed: '上傳成功',
+    upFailed: '上傳失敗',
+    upload2: '上傳到'
   }
 }

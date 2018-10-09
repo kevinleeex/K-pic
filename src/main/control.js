@@ -31,7 +31,7 @@ export const control = {
 
   // save the app config
   saveConfig (event, arg) {
-    console.info('!!!!!!!!!!!!' + JSON.stringify(arg))
+    // console.info('!!!' + JSON.stringify(arg))
     let config = {
       curServer: {
         id: arg.curServer.id,
@@ -55,7 +55,6 @@ export const control = {
     // storage.setDataPath(path.join(os.homedir(), 'k-pic'))
     const dataPath = storage.getDataPath()
     console.info(dataPath)
-
     storage.set('appConfig', config, function (error) {
       if (error) {
         console.log('Save failed.')

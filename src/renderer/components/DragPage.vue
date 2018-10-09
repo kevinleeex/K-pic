@@ -83,9 +83,11 @@
 </template>
 
 <script>
+  /* eslint-disable no-unused-vars */
+
   import {mapGetters, mapActions} from 'vuex'
   import {sender, reciever} from '../utils/pipeline'
-
+  import {local} from '../utils/storage'
   export default {
     name: 'drag-page',
     components: {},
@@ -94,12 +96,12 @@
         isMarkdown: true,
         upStatus: 'resting',
         signType: '',
-        dragTips: this.$t('m.tips.drag'),
+        dragTips: '',
         btnActive: true,
         dialogVisible: false,
         options: [{
           value: '0',
-          label: this.$t('m.scale'),
+          label: '',
           disabled: true
         }, {
           value: '1',
@@ -201,6 +203,12 @@
           console.info('data: ' + JSON.stringify(data.data))
           if (data.data.code === 200) {
             this.upStatus = 'resting'
+            const notification = {
+              title: this.$t('m.tips.upSucceed'),
+              body: data.data.fileInfo.srcFileName + ' ' + this.$t('m.tips.upload2') + ' ' + data.data.serverInfo.name
+            }
+            const notificationButton = document.getElementById('basic-noti')
+            const myNotification = new window.Notification(notification.title, notification)
           }
         })
       },
@@ -218,7 +226,7 @@
     mounted: function () {
       sender.loadConfig()
       reciever.getConfig((data) => {
-        console.info('data: ' + JSON.stringify(data.data))
+        // console.info('data: ' + JSON.stringify(data.data))
         if (!data['state']) {
           this.$notify({
             title: this.$t('m.tips.warning'),
@@ -227,11 +235,13 @@
             type: 'warning'
           })
         } else {
-          this.$i18n.locale = data.data.commonSet.language
+          // this.$i18n.locale = data.data.commonSet.language
+          this.$i18n.locale = local.getItem('lang')
           this.setConfig(data['data'])
         }
       })
-      // console.info('test! ' + this.getCurServer)
+      this.dragTips = this.$t('m.tips.drag')
+      this.options[0].label = this.$t('m.scale')
     }
   }
 </script>
