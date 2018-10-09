@@ -12,6 +12,12 @@ export const sender = {
   },
   saveConfig (arg) {
     ipcRenderer.send('save-config', arg)
+  },
+  notify (arg) {
+    ipcRenderer.send('notify', arg)
+  },
+  upload (arg) {
+    ipcRenderer.send('upload', arg)
   }
 }
 
@@ -23,6 +29,11 @@ export const reciever = {
   },
   resSaveConfig (callback) {
     ipcRenderer.on('on-save', (event, arg) => {
+      callback(arg)
+    })
+  },
+  resUpload (callback) {
+    ipcRenderer.on('on-upload', (event, arg) => {
       callback(arg)
     })
   }

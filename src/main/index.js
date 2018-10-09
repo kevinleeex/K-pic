@@ -3,13 +3,17 @@ const {
   app,
   BrowserWindow,
   ipcMain,
+  Menu,
   Tray
 } = require('electron')
+const os = require('os')
+const path = require('path')
+const storage = require('electron-json-storage')
 const {control} = require('./control')
 let tray
 let window
 let settingWin
-
+let contextMenu
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -18,13 +22,15 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
+const storagePath = path.join(os.homedir(), 'k-pic')
+storage.setDataPath(storagePath)
+
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
 
 // Hide the app in dock on Mac
 app.dock.hide()
-
 app.on('ready', () => {
   createTray()
   createWindow()
@@ -39,9 +45,20 @@ const logo = `${__static}/img/kpicTemplate.png`
 
 const createTray = () => {
   tray = new Tray(logo)
-  tray.on('right-click', toggleMenu)
+  // tray.setContextMenu(contextMenu)
+  contextMenu = Menu.buildFromTemplate([{
+    label: 'Quit',
+    click: () => {
+      app.quit()
+    }
+  }])
+  tray.on('right-click', function (event) {
+    console.info('right-click tray')
+    toggleMenu()
+  })
   tray.on('double-click', toggleWindow)
   tray.on('click', function (event) {
+    console.info('click tray')
     toggleWindow()
 
     // Show devtools when command clicked
@@ -82,14 +99,8 @@ const createWindow = () => {
       backgroundThrottling: false
     }
   })
-
   // load the user interface
   window.loadURL(winURL)
-
-  // Hide the window when it loses focus
-  // window.on('blur', () => {
-  //
-  // })
 }
 
 const toggleWindow = () => {
@@ -101,6 +112,7 @@ const toggleWindow = () => {
 }
 
 const toggleMenu = () => {
+  tray.popUpContextMenu(contextMenu)
 }
 
 const openWindow = (url) => {
@@ -158,4 +170,9 @@ ipcMain.on('load-config', (event) => {
 
 ipcMain.on('save-config', (event, arg) => {
   control.saveConfig(event, arg)
+  window.webContents.reload()
+})
+
+ipcMain.on('notify', (event, arg) => {
+  control.notify(event, arg)
 })

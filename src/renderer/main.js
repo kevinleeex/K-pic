@@ -7,6 +7,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+import {webFrame} from 'electron'
+// fix zoom at 100%, disable the zoom operation
+webFrame.setVisualZoomLevelLimits(1, 1)
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
@@ -15,7 +18,7 @@ Vue.use(ElementUI)
 
 /* eslint-disable no-new */
 new Vue({
-  components: { App },
+  components: {App},
   i18n,
   router,
   store,

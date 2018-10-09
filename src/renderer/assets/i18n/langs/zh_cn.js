@@ -7,14 +7,21 @@ export const m = {
   history: '历史记录',
   power: '驱动',
   version: '版本',
+  vno: '0.0.1',
   intro: '「一个简便的图床上传工具」',
+  about: '关于',
   common: '常规',
   server: '服务器',
   cancel: '取消',
+  apply: '应用',
   confirm: '确认',
+  quit: '退出',
   limit: '历史条目数量',
   imgSizeLimit: '图片大小限制',
   workWith: '正在使用',
+  author: 'Kevin T. Lee',
+  copyright: '版权所有',
+  license: '许可声明',
   labelConfig: {
     serviceType: '服务商',
     bucket: 'Bucket',
@@ -28,10 +35,13 @@ export const m = {
   tips: {
     warning: '警告',
     unsetConfig: '服务器没有正确配置',
+    setConfig: '服务器正确配置',
     unset: '未配置',
     edit: '编辑',
     delete: '删除',
     operation: '操作',
-    save: '保存'
+    save: '保存',
+    donate: '打赏我',
+    thanks: '您的帮助是我前行的动力,感谢您慷慨的捐助!'
   }
 }

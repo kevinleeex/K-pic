@@ -1,34 +1,37 @@
 /* eslint-disable no-unused-vars */
+const os = require('os')
+const path = require('path')
 const storage = require('electron-json-storage')
 
 export const control = {
   // load the app config
   loadConfig (event) {
-    let val = storage.get('appConfig')
-    let retMsg
-    console.info('!!!' + val)
-    if (val === undefined) {
-      retMsg = {
-        state: false,
-        code: 403,
-        msg: 'undefined',
-        data: {}
+    const dataPath = storage.getDataPath()
+    console.info('Load!!' + dataPath)
+    storage.get('appConfig', function (error, data) {
+      let retMsg
+      if (error) {
+        retMsg = {
+          state: false,
+          code: 403,
+          msg: 'undefined',
+          data: {}
+        }
+      } else {
+        retMsg = {
+          state: true,
+          code: 200,
+          msg: 'Load succeed',
+          data: data
+        }
       }
       event.sender.send('on-load', retMsg)
-      // console.info(retMsg)
-      return false
-    }
-    retMsg = {
-      state: true,
-      code: 200,
-      msg: 'success',
-      data: val
-    }
-    event.sender.send('on-load', retMsg)
+    })
   },
 
   // save the app config
   saveConfig (event, arg) {
+    console.info('!!!!!!!!!!!!' + JSON.stringify(arg))
     let config = {
       curServer: {
         id: arg.curServer.id,
@@ -49,6 +52,10 @@ export const control = {
     }
 
     let retMsg
+    // storage.setDataPath(path.join(os.homedir(), 'k-pic'))
+    const dataPath = storage.getDataPath()
+    console.info(dataPath)
+
     storage.set('appConfig', config, function (error) {
       if (error) {
         console.log('Save failed.')

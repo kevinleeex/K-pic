@@ -5,11 +5,11 @@
             <div class="title_container no_drag">
                 <div class="app_title" @click="open('http:lidengju.com')">K-Pic</div>
             </div>
-            <div id="drag_area" class="drag_area no_drag">
+            <div @drop="drop2upload" id="drag_area" class="drag_area no_drag">
                 <div class="drag_container"><img class="drag_img" src="../assets/icons/drag_img.svg"></div>
                 <div class="drag_text"><p>{{$t('m.drag')}}</p></div>
                 <div class="server_info"><span>{{$t('m.workWith')}}</span><br><span
-                        :class="{'error': (getCurServer.name==='')}">{{(getCurServer.name==='')?$t('m.tips.unset'):getCurServer.name}}</span>
+                        :class="{'error': (currentServer.name==='')}">{{(currentServer.name==='')?$t('m.tips.unset'):currentServer.name}}</span>
                 </div>
             </div>
             <div id="back_container" class="no_drag">
@@ -46,7 +46,7 @@
                 <el-header>
                     <div class="info_title_container">
                         <div class="info_title" @click="open('http:lidengju.com')"><p>K-Pic</p></div>
-                        <div class="version"><p><span>{{$t('m.version')}}:</span> <span>0.0.1</span></p></div>
+                        <div class="version"><p><span>{{$t('m.version')}}:</span> <span>{{$t('m.vno')}}</span></p></div>
                         <div class="intro"><p>{{$t('m.intro')}}</p></div>
                     </div>
 
@@ -62,8 +62,7 @@
                     </ul>
                 </el-main>
                 <el-footer class="info_footer">
-                    <p>©2018 | <span class="name" @click="open('http://lidengju.com/blog/about')">Li Dengju.</span> All
-                        rights reserved.</p>
+                    <p>©2018 | <span class="name" @click="open('http://lidengju.com/blog/about')">{{$t('m.author')}}.</span>{{$t('m.copyright')}}.</p>
                 </el-footer>
             </el-container>
         </el-dialog>
@@ -71,7 +70,7 @@
 </template>
 
 <script>
-  import {mapState, mapGetters, mapActions} from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
   import {sender, reciever} from '../utils/pipeline'
 
   export default {
@@ -116,7 +115,9 @@
     },
     computed: {
       ...mapGetters(['getCurServer']),
-      ...mapState(['curServer'])
+      currentServer: function () {
+        return this.getCurServer
+      }
     },
     methods: {
       ...mapActions([
@@ -126,12 +127,15 @@
       },
       setting () {
         this.toggleSettingWin(true)
+      },
+      drop2upload () {
+
       }
     },
     mounted: function () {
       sender.loadConfig()
       reciever.getConfig((data) => {
-        // console.info('data: ' + data['code'])
+        console.info('data: ' + JSON.stringify(data.data))
         if (!data['state']) {
           this.$notify({
             title: this.$t('m.tips.warning'),
@@ -354,6 +358,7 @@
     }
 
     .app_title {
+        display: inline-block;
         width: fit-content;
         font-family: Marion-Bold, serif;
         font-size: 40px;

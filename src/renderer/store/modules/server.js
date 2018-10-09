@@ -13,9 +13,9 @@ const state = {
   },
   serverList: [],
   commonSet: {
-    language: 'en',
-    historyLimit: '100',
-    imgSizeLimit: '5',
+    language: '',
+    historyLimit: '',
+    imgSizeLimit: '',
     workWith: ''
   }
 }
@@ -69,7 +69,7 @@ const mutations = {
   },
   [types.SET_CUR_SERVER] (state, data) {
     Vue.set(state, 'curServer', data.curServer)
-    console.info(JSON.stringify(state.curServer))
+    console.info('action set cur' + JSON.stringify(state.curServer))
   },
   [types.ADD_SERVER] (state, data) {
     console.info('add server')

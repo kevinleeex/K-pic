@@ -20,3 +20,7 @@ body{
 .no_drag {
     -webkit-app-region: no-drag !important;
 }
+
+.clickable{
+    cursor: pointer;
+}

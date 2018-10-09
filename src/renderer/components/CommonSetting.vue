@@ -72,7 +72,7 @@
 <script>
   /* eslint-disable no-unused-vars */
 
-  import {mapActions, mapGetters} from 'vuex'
+  import {mapActions, mapGetters, mapState} from 'vuex'
 
   let historyLimit = [{
     value: '100',
@@ -112,6 +112,16 @@
     },
     computed: {
       ...mapGetters(['getCurServer', 'getCommonSet', 'getServerList']),
+      commonSets: function () {
+        return {
+          commonSet: {
+            historyLimit: this.hValue,
+            imgSizeLimit: this.iValue,
+            workWith: this.sValue,
+            language: this.lValue
+          }
+        }
+      },
       serverNameList: function () {
         // get the server name list.
         let names = []
@@ -123,16 +133,6 @@
           this.sValue = ''
         }
         return names
-      },
-      commonConfig: function () {
-        return {
-          commonSet: {
-            language: this.lValue,
-            historyLimit: this.hValue,
-            imgSizeLimit: this.iValue,
-            workWith: this.sValue
-          }
-        }
       },
       curServer: function () {
         let index = this.sValue
@@ -156,17 +156,16 @@
     },
     watch: {
       hValue: function () {
-        this.setCommonConfig(this.commonConfig)
+        this.setCommonConfig(this.commonSets)
       },
       iValue: function () {
-        this.setCommonConfig(this.commonConfig)
+        this.setCommonConfig(this.commonSets)
       },
       sValue: function () {
-        this.setCommonConfig(this.commonConfig)
-        this.setServerWorkWith(this.curServer)
+        this.setCommonConfig(this.commonSets)
       },
       lValue: function () {
-        this.setCommonConfig(this.commonConfig)
+        this.setCommonConfig(this.commonSets)
       }
     },
     mounted: function () {
@@ -179,13 +178,18 @@
         this.setServerWorkWith(this.curServer)
       },
       initConfig () {
-        this.hValue = this.getCommonSet.historyLimit
-        this.iValue = this.getCommonSet.imgSizeLimit
-        this.sValue = this.getCommonSet.workWith
-        this.lValue = this.getCommonSet.language
+        this.hValue = this.$store.getters.getCommonSet.historyLimit
+        this.iValue = this.$store.getters.getCommonSet.imgSizeLimit
+        this.sValue = this.$store.getters.getCommonSet.workWith
+        this.lValue = this.$store.getters.getCommonSet.language
       },
       setServerWorkWith (config) {
         this.setCurServer(config)
+      },
+      copyList (src, target) {
+        for (let attr in src) {
+          target[attr] = src[attr]
+        }
       },
       ...mapActions(['setCommonConfig', 'setCurServer'])
     }
