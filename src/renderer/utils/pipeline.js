@@ -18,10 +18,18 @@ export const sender = {
   },
   upload (arg) {
     ipcRenderer.send('file-upload', arg)
+  },
+  copy2clipboard (arg) {
+    ipcRenderer.send('copy-clipboard', arg)
   }
 }
 
 export const reciever = {
+  resCopy (callback) {
+    ipcRenderer.on('on-copied', (event) => {
+      callback()
+    })
+  },
   getConfig (callback) {
     ipcRenderer.on('on-load', (event, arg) => {
       callback(arg)
@@ -34,6 +42,11 @@ export const reciever = {
   },
   resUpload (callback) {
     ipcRenderer.on('on-upload', (event, arg) => {
+      callback(arg)
+    })
+  },
+  resUploadFinish (callback) {
+    ipcRenderer.on('on-upload-finish', (event, arg) => {
       callback(arg)
     })
   },

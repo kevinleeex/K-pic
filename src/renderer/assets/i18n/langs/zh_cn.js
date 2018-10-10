@@ -51,6 +51,10 @@ export const m = {
     markOff: 'Markdown 格式关闭',
     upSucceed: '上传成功',
     upFailed: '上传失败',
-    upload2: '上传到'
+    upload2: '上传到',
+    upFinished: '上传完成',
+    upNum: '上传了',
+    file: '个文件',
+    paste: '链接已复制到剪贴板'
   }
 }

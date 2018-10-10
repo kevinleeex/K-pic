@@ -14,7 +14,8 @@
                     :class="{'error': (currentServer.name==='')}">{{(currentServer.name==='')?$t('m.tips.unset'):currentServer.name}}</span>
             </div>
             <div id="back_container" class="no_drag">
-                <el-button class="btn_back" :type="signType" :disabled="btnActive" round>{{signal}}</el-button>
+                <el-button class="btn_back" :type="signType" :disabled="btnActive" round>{{signal}} {{counter}}
+                </el-button>
             </div>
             <div class="btn_panel">
                 <el-row :gutter="20">
@@ -96,6 +97,7 @@
       return {
         isMarkdown: true,
         upStatus: 'resting',
+        counter: '',
         signType: '',
         dragTips: '',
         btnActive: true,
@@ -167,16 +169,20 @@
     },
     methods: {
       ...mapActions([
-        'toggleSettingWin', 'setConfig']),
+        'toggleSettingWin', 'setConfig', 'addHistory', 'delHistory']),
       open (link) {
         this.$electron.shell.openExternal(link)
       },
       setting () {
         this.toggleSettingWin(true)
       },
+      uploading (callback) {
+
+      },
       drop2upload (event) {
         event.preventDefault()
         event.stopPropagation()
+        this.upStatus = 'uploading'
         if (this.currentServer.name === '' || this.currentServer.name === undefined) {
           this.$notify({
             title: this.$t('m.tips.warning'),
@@ -186,30 +192,45 @@
           })
           return
         }
-        let files = event.dataTransfer.files
-        let fileList = []
+        let files = event.dataTransfer.files // get upload files
+        const fileNum = files.length
+        let fileCounter = 0
+        let pasteList = []
         for (let f of files) {
           console.info('File(s) you dragged to here', f.path)
-          const singleFile = {timestamp: new Date().getTime(), path: f.path}
-          fileList.push(singleFile)
+          let singleFile = {timestamp: new Date().getTime(), path: f.path}
+          let upData = {
+            serverInfo: this.currentServer,
+            fileInfo: singleFile,
+            settingInfo: {scale: this.scale, isMarkdown: this.isMarkdown}
+          }
+          sender.upload(upData)
         }
-        let upData = {
-          serverInfo: this.currentServer,
-          filesInfo: fileList,
-          settingInfo: {scale: this.scale, isMarkdown: this.isMarkdown}
-        }
-        sender.upload(upData)
-        this.upStatus = 'uploading'
+
         reciever.resUpload((data) => {
           console.info('data: ' + JSON.stringify(data.data))
           if (data.data.code === 200) {
+            this.$message({message: this.$t('m.tips.upSucceed'), center: true})
+            pasteList.push(data.data.fileInfo)
+          }
+          fileCounter += 1
+          console.info('total, count', fileNum, fileCounter)
+          this.counter = fileNum - fileCounter
+          console.warn(fileCounter)
+          if (fileCounter === fileNum) {
+            this.counter = ''
             this.upStatus = 'resting'
-            const notification = {
-              title: this.$t('m.tips.upSucceed'),
-              body: data.data.fileInfo.srcFileName + ' ' + this.$t('m.tips.upload2') + ' ' + data.data.serverInfo.name
-            }
-            const notificationButton = document.getElementById('basic-noti')
-            const myNotification = new window.Notification(notification.title, notification)
+            fileCounter = 0
+            const srcData = {setting: {isMarkdown: this.isMarkdown}, files: pasteList}
+            sender.copy2clipboard(srcData)
+            reciever.resCopy(() => {
+              const notification = {
+                title: this.$t('m.tips.upFinished'),
+                body: this.$t('m.tips.upNum') + fileNum + this.$t('m.tips.file') + ', ' + this.$t('m.tips.paste')
+              }
+              const notificationButton = document.getElementById('basic-noti')
+              const myNotification = new window.Notification(notification.title, notification)
+            })
           }
         })
       },

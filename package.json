@@ -1,6 +1,6 @@
 {
   "name": "k-pic",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Kevin <kevinleeex@foxmail.com>",
   "description": "This is a cloud image uploader for Mac & PC(*) built with electron & vue.",
   "license": "MIT",
@@ -8,6 +8,8 @@
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
     "build:all": "node .electron-vue/build.js && electron-builder -wml",
+    "build:win": "node .electron-vue/build.js && electron-builder --win",
+    "build:linux": "node .electron-vue/build.js && electron-builder --linux",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",

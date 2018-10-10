@@ -280,3 +280,7 @@ ipcMain.on('file-upload', (event, arg) => {
   console.info('Start upload with', JSON.stringify(arg))
   uploader.upload(event, arg)
 })
+
+ipcMain.on('copy-clipboard', (event, arg) => {
+  uploader.copy2clipboard(event, arg)
+})

@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+import {sender} from '../renderer/utils/pipeline'
+
 const os = require('os')
 const path = require('path')
 const storage = require('electron-json-storage')
@@ -8,55 +10,61 @@ const {clipboard} = require('electron')
 export const uploader = {
   upload (event, arg) {
     const server = arg.serverInfo
-    const files = arg.filesInfo
+    const file = arg.fileInfo
     const setting = arg.settingInfo
-
-    for (let file of files) {
-      let retData = {code: -1}
-      let retMsg = {
-        state: false,
-        code: 400,
-        msg: 'Error',
-        data: retData
-      }
-      let filePro = fileNameTool(file)
-      switch (server.type) {
-        case 'COS':
-          try {
-            uploadCOS(server, filePro, (retData) => {
-              console.info('retData2: ', retData)
-              if (retData.code === 200) {
-                retMsg = {
-                  state: true,
-                  code: 200,
-                  msg: 'Upload succeed',
-                  data: retData
-                }
-                save2clipboard(setting, retData)
-              } else {
-                retMsg = {
-                  state: false,
-                  code: 400,
-                  msg: 'upload failed',
-                  data: retData
-                }
-              }
-              event.sender.send('on-upload', retMsg)
-            })
-          } catch (e) {
-            console.error('error: ', e)
-            event.sender.send('on-upload', retMsg)
-            return
+    let retData = {code: -1}
+    let retMsg = {
+      state: false,
+      code: 400,
+      msg: 'Error',
+      data: retData
+    }
+    let filePro = fileNameTool(file)
+    switch (server.type) {
+      case 'COS':
+        uploadCOS(server, filePro, (retData) => {
+          console.info('retData from COS: ', retData)
+          if (retData.code === 200) {
+            retMsg = {
+              state: true,
+              code: 200,
+              msg: 'Upload succeed',
+              data: retData
+            }
+          } else {
+            retMsg = {
+              state: false,
+              code: 400,
+              msg: 'upload failed',
+              data: retData
+            }
           }
-          break
-        case 'OSS':
-          break
-        case 'QN':
-          break
-        case 'AWS':
-          break
+          event.sender.send('on-upload', retMsg)
+        })
+        break
+      case 'OSS':
+        break
+      case 'QN':
+        break
+      case 'AWS':
+        break
+    }
+    // end switch
+  },
+  copy2clipboard (event, arg) {
+    console.info('copy to clipboard')
+    const isMarkdown = arg.setting.isMarkdown
+    const files = arg.files
+
+    let dstList = []
+    for (let file of files) {
+      if (isMarkdown) {
+        const retMarkStr = toMarked(file)
+        dstList.push(retMarkStr)
       }
     }
+    save2clipboard(dstList.join('\n'))
+    event.sender.send('on-copied')
   }
 }
 
@@ -110,10 +118,10 @@ const fileNameTool = function (file) {
   return {timestamp: file.timestamp, srcPath: file.path, srcFileName: srcFileName, dstFileName: dstFileName}
 }
 
-const save2clipboard = function (setting, retData) {
-  if (setting.isMarkdown) {
-    clipboard.writeText('![' + retData.fileInfo.srcFileName + '](http://' + retData.fileInfo.dstPath + ')')
-  } else {
-    clipboard.writeText(retData.fileInfo.dstPath)
-  }
+const save2clipboard = function (data) {
+  clipboard.writeText(data)
+}
+
+const toMarked = function (fileInfo) {
+  return '![' + fileInfo.srcFileName + '](http://' + fileInfo.dstPath + ')'
 }

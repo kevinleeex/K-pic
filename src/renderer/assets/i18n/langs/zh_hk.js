@@ -51,6 +51,10 @@ export const m = {
     markOff: 'Markdown 格式關閉',
     upSucceed: '上傳成功',
     upFailed: '上傳失敗',
-    upload2: '上傳到'
+    upload2: '上傳到',
+    upFinished: '上傳完成',
+    upNum: '上傳了',
+    file: '個文件',
+    paste: '鏈接已被拷貝到剪貼板'
   }
 }

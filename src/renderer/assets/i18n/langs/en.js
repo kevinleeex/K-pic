@@ -51,6 +51,10 @@ export const m = {
     markOff: 'Markdown format off',
     upSucceed: 'Upload succeed',
     upFailed: 'Upload failed',
-    upload2: 'upload to'
+    upload2: 'upload to',
+    upFinished: 'Upload finished',
+    upNum: 'Uploaded',
+    file: 'file(s)',
+    paste: 'The url(s) is(are) copied to your clipboard.'
   }
 }
