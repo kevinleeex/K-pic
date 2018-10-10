@@ -226,7 +226,7 @@
     mounted: function () {
       sender.loadConfig()
       reciever.getConfig((data) => {
-        // console.info('data: ' + JSON.stringify(data.data))
+        console.info('data: ' + JSON.stringify(data.data))
         if (!data['state']) {
           this.$notify({
             title: this.$t('m.tips.warning'),
@@ -416,7 +416,6 @@
 
     .set_button {
         color: black;
-        margin-left: 20px;
         background: #F2F2F2;
         box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.50);
         border-radius: 3px;

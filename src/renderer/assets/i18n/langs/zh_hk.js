@@ -33,7 +33,7 @@ export const m = {
   tips: {
     warning: '警告',
     unsetConfig: '伺服器沒有正確配置',
-    setConfig: '伺服器正確配置',
+    setConfig: '伺服器正確保存',
     unset: '未配置',
     edit: '編輯',
     delete: '刪除',

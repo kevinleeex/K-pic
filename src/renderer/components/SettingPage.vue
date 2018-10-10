@@ -60,7 +60,15 @@
     methods: {
       getCurrentServerByName () {
         const sName = this.getCommonSet.workWith
-        let currentServer = {}
+        let currentServer = {
+          id: '',
+          name: '',
+          type: '',
+          secretId: '',
+          secretKey: '',
+          region: '',
+          bucket: ''
+        }
         for (let ix in this.getServerList) {
           if (sName === this.getServerList[ix].name) {
             currentServer = JSON.parse(JSON.stringify(this.getServerList[ix]))

@@ -33,7 +33,7 @@ export const m = {
   tips: {
     warning: 'Warning',
     unsetConfig: 'Server configuration is not set.',
-    setConfig: 'Server configuration is correctly set',
+    setConfig: 'Server configuration is saved',
     unset: 'unset',
     edit: 'Edit',
     delete: 'Delete',

@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 const {
   app,
+  // autoUpdater,
+  // dialog,
   BrowserWindow,
   ipcMain,
   Menu,
@@ -21,6 +23,33 @@ let contextMenu
  */
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+  // const server = 'https://github.com/kevinleeex/K-pic'
+  // const feed = `${server}/update/${process.platform}/${app.getVersion()}`
+  //
+  // autoUpdater.setFeedURL(feed)
+  //
+  // setInterval(() => {
+  //   autoUpdater.checkForUpdates()
+  // }, 60000)
+  //
+  // autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  //   const dialogOpts = {
+  //     type: 'info',
+  //     buttons: ['Restart', 'Later'],
+  //     title: 'Application Update',
+  //     message: process.platform === 'win32' ? releaseNotes : releaseName,
+  //     detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+  //   }
+  //
+  //   dialog.showMessageBox(dialogOpts, (response) => {
+  //     if (response === 0) autoUpdater.quitAndInstall()
+  //   })
+  // })
+  //
+  // autoUpdater.on('error', message => {
+  //   console.error('There was a problem updating the application')
+  //   console.error(message)
+  // })
 }
 
 const storagePath = path.join(os.homedir(), 'k-pic')
@@ -33,6 +62,34 @@ const winURL = process.env.NODE_ENV === 'development'
 const setURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080/#/setting`
   : `file://${__dirname}/index.html#setting` // this is a trick to write the url
+
+// Create the Application's main menu
+let template = [{
+  label: 'Application',
+  submenu: [
+    {label: 'About Application', selector: 'orderFrontStandardAboutPanel:'},
+    {type: 'separator'},
+    {
+      label: 'Quit',
+      accelerator: 'Command+Q',
+      click: function () {
+        app.quit()
+      }
+    }
+  ]
+}, {
+  label: 'Edit',
+  submenu: [
+    {label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:'},
+    {label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:'},
+    {type: 'separator'},
+    {label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:'},
+    {label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:'},
+    {label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:'},
+    {label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:'}
+  ]
+}
+]
 
 // Hide the app in dock on Mac
 app.dock.hide()
@@ -148,6 +205,35 @@ const openWindow = (url) => {
     settingWin = null
   })
 
+  let template = [{
+    label: 'Application',
+    submenu: [
+      {label: 'About Application', selector: 'orderFrontStandardAboutPanel:'},
+      {type: 'separator'},
+      {
+        label: 'Quit',
+        accelerator: 'Command+Q',
+        click: function () {
+          app.quit()
+        }
+      }
+    ]
+  }, {
+    label: 'Edit',
+    submenu: [
+      {label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:'},
+      {label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:'},
+      {type: 'separator'},
+      {label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:'},
+      {label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:'},
+      {label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:'},
+      {label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:'}
+    ]
+  }
+  ]
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+
   return settingWin
 }
 
@@ -163,6 +249,7 @@ ipcMain.on('show-window', () => {
 })
 
 ipcMain.on('open-setting-win', (event) => {
+  // Create the Application's main menu
   if (settingWin) {
     settingWin.focus()
   } else {

@@ -13,9 +13,9 @@ const state = {
   },
   serverList: [],
   commonSet: {
-    language: '',
-    historyLimit: '',
-    imgSizeLimit: '',
+    language: 'en',
+    historyLimit: '100',
+    imgSizeLimit: '5',
     workWith: ''
   }
 }

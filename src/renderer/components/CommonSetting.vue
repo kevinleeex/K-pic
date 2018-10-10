@@ -182,7 +182,7 @@
         this.hValue = this.$store.getters.getCommonSet.historyLimit
         this.iValue = this.$store.getters.getCommonSet.imgSizeLimit
         this.sValue = this.$store.getters.getCommonSet.workWith
-        this.lValue = this.$store.getters.getCommonSet.language
+        this.lValue = this.$i18n.locale
       },
       setServerWorkWith (config) {
         this.setCurServer(config)

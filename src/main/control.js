@@ -8,14 +8,34 @@ export const control = {
   loadConfig (event) {
     const dataPath = storage.getDataPath()
     console.info('Load!!' + dataPath)
+    const tempData = {
+      curServer: {
+        id: '',
+        name: '',
+        type: '',
+        secretId: '',
+        secretKey: '',
+        region: '',
+        bucket: ''
+      },
+      serverList: [],
+      commonSet: {
+        language: 'en',
+        historyLimit: '100',
+        imgSizeLimit: '5',
+        workWith: ''
+      }
+    }
     storage.get('appConfig', function (error, data) {
       let retMsg
-      if (error) {
+      console.error(error, data)
+      const hasConfig = JSON.stringify(data) === '{}'
+      if (hasConfig) {
         retMsg = {
           state: false,
           code: 400,
           msg: 'undefined',
-          data: {}
+          data: tempData
         }
       } else {
         retMsg = {

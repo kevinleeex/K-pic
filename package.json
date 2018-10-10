@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "Kevin <kevinleeex@foxmail.com>",
   "description": "This is a cloud image uploader for Mac & PC(*) built with electron & vue.",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -61,6 +61,7 @@
     "cos-nodejs-sdk-v5": "^2.4.10",
     "electron-json-storage": "^4.1.3",
     "electron-settings": "^3.2.0",
+    "electron-updater": "^3.1.2",
     "element-ui": "^2.4.7",
     "i": "^0.3.6",
     "vue": "^2.5.16",
