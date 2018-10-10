@@ -88,6 +88,7 @@
   import {mapGetters, mapActions} from 'vuex'
   import {sender, reciever} from '../utils/pipeline'
   import {local} from '../utils/storage'
+
   export default {
     name: 'drag-page',
     components: {},
@@ -227,7 +228,8 @@
       sender.loadConfig()
       reciever.getConfig((data) => {
         console.info('data: ' + JSON.stringify(data.data))
-        if (!data['state']) {
+        // this.$i18n.locale = local.getItem('lang')
+        if (!data['state'] || data.data.commonSet.workWith === '') {
           this.$notify({
             title: this.$t('m.tips.warning'),
             message: this.$t('m.tips.unsetConfig'),
@@ -236,12 +238,18 @@
           })
         } else {
           // this.$i18n.locale = data.data.commonSet.language
-          this.$i18n.locale = local.getItem('lang')
+
           this.setConfig(data['data'])
         }
       })
       this.dragTips = this.$t('m.tips.drag')
       this.options[0].label = this.$t('m.scale')
+      reciever.resUpdate((data) => {
+        let container = document.getElementById('messages')
+        let message = document.createElement('div')
+        message.innerHTML = data
+        container.appendChild(message)
+      })
     }
   }
 </script>

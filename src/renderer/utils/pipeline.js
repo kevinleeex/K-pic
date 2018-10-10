@@ -36,6 +36,11 @@ export const reciever = {
     ipcRenderer.on('on-upload', (event, arg) => {
       callback(arg)
     })
+  },
+  resUpdate (callback) {
+    ipcRenderer.on('on-update', (event, arg) => {
+      callback(arg)
+    })
   }
 }
 

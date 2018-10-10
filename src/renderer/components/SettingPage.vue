@@ -124,7 +124,7 @@
         sender.loadConfig()
         reciever.getConfig((data) => {
           // console.info('data: ' + data['code'])
-          if (!data['state']) {
+          if (!data['state'] || data.data.commonSet.workWith === '') {
             this.$notify({
               title: this.$t('m.tips.warning'),
               message: this.$t('m.tips.unsetConfig'),
@@ -132,7 +132,6 @@
               type: 'warning'
             })
           } else {
-            this.$i18n.locale = local.getItem('lang')
             this.setConfig(data['data'])
           }
         })

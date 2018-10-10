@@ -7,6 +7,7 @@
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
+    "build:all": "node .electron-vue/build.js && electron-builder -wml",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
@@ -20,6 +21,17 @@
     "test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js",
     "postinstall": "npm run lint:fix"
+  },
+  "publish": [
+    {
+      "provider": "github",
+      "repo": "K-pic",
+      "owner": "kevinleeex"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinleeex/K-pic.git"
   },
   "build": {
     "productName": "k-pic",

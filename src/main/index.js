@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 const {
   app,
-  // autoUpdater,
-  // dialog,
   BrowserWindow,
   ipcMain,
   Menu,
@@ -11,6 +9,7 @@ const {
 const os = require('os')
 const path = require('path')
 const storage = require('electron-json-storage')
+const {autoUpdater} = require('electron-updater')
 const {control} = require('./control')
 const {uploader} = require('./uploader')
 let tray
@@ -52,6 +51,32 @@ if (process.env.NODE_ENV !== 'development') {
   // })
 }
 
+function updateSets () {
+  console.info('App starting...')
+  autoUpdater.on('checking-for-update', () => {
+    sendStatusToWindow('Checking for update...')
+  })
+  autoUpdater.on('update-available', (info) => {
+    sendStatusToWindow('Update available.')
+  })
+  autoUpdater.on('update-not-available', (info) => {
+    sendStatusToWindow('Update not available.')
+  })
+  autoUpdater.on('error', (err) => {
+    sendStatusToWindow('Error in auto-updater. ' + err)
+  })
+  autoUpdater.on('download-progress', (progressObj) => {
+    let logMessage = 'Download speed: ' + progressObj.bytesPerSecond
+    logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%'
+    logMessage = logMessage + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
+    sendStatusToWindow(logMessage)
+  })
+  autoUpdater.on('update-downloaded', (info) => {
+    sendStatusToWindow('Update downloaded')
+  })
+}
+updateSets()
+
 const storagePath = path.join(os.homedir(), 'k-pic')
 storage.setDataPath(storagePath)
 
@@ -62,34 +87,6 @@ const winURL = process.env.NODE_ENV === 'development'
 const setURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080/#/setting`
   : `file://${__dirname}/index.html#setting` // this is a trick to write the url
-
-// Create the Application's main menu
-let template = [{
-  label: 'Application',
-  submenu: [
-    {label: 'About Application', selector: 'orderFrontStandardAboutPanel:'},
-    {type: 'separator'},
-    {
-      label: 'Quit',
-      accelerator: 'Command+Q',
-      click: function () {
-        app.quit()
-      }
-    }
-  ]
-}, {
-  label: 'Edit',
-  submenu: [
-    {label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:'},
-    {label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:'},
-    {type: 'separator'},
-    {label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:'},
-    {label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:'},
-    {label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:'},
-    {label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:'}
-  ]
-}
-]
 
 // Hide the app in dock on Mac
 app.dock.hide()
@@ -163,6 +160,11 @@ const createWindow = () => {
   })
   // load the user interface
   window.loadURL(winURL)
+}
+
+const sendStatusToWindow = (text) => {
+  console.info(text)
+  window.webContents.send('message', text)
 }
 
 const toggleWindow = () => {
