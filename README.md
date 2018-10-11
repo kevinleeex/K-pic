@@ -2,27 +2,17 @@
 
 > This is a cloud image uploader for Mac & PC(*) built with electron & vue.
 
-#### Build Setup
+## Update Notes
+### v0.0.3
+#### Released date: 11/10/2018
+> </> with ♡
+- Fixed auto updater bugs. 
 
-``` bash
-# install dependencies
-npm install
+### v0.0.2
+#### Released date: 11/10/2018
+> Almost there, I'm so tired.
 
-# serve with hot reload at localhost:9080
-npm run dev
-
-# build electron application for production
-npm run build
-
-# run unit & end-to-end tests
-npm test
+- Add manual updating in setting page.
+- Fixed some bugs.
 
 
-# lint all JS/Vue component files in `src/`
-npm run lint
-
-```
-
----
-
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[32ecf6a](https://github.com/SimulatedGREG/electron-vue/tree/32ecf6aebd2e2c28ad2628f151697529e442e679) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).

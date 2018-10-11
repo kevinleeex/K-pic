@@ -211,7 +211,7 @@ function updateSets () {
       type: 'info',
       title: '[K-pic]发现可用更新',
       message: '发现可用更新, 是否现在更新?(Update now?)',
-      detail: '发布时间: [' + info.releaseDate + '] ' + '版本: v' + info.version + ', \n' + info.releaseNote,
+      detail: '发布时间: [' + info.releaseDate + '] ' + '版本: v' + info.version + ', \n' + info.releaseNotes,
       buttons: ['确定(Y)', '取消(N)']
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
