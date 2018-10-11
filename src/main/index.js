@@ -79,11 +79,11 @@ const createTray = () => {
     toggleWindow()
 
     // Show devtools when command clicked
-    if (window.isVisible() && process.defaultApp && event.metaKey) {
-      window.openDevTools({
-        mode: 'detach'
-      })
-    }
+    // if (window.isVisible() && process.defaultApp && event.metaKey) {
+    //   window.openDevTools({
+    //     mode: 'detach'
+    //   })
+    // }
   })
 }
 
@@ -117,7 +117,7 @@ const createWindow = () => {
     }
   })
   // load the user interface
-  window.webContents.openDevTools()
+  // window.webContents.openDevTools()
   window.loadURL(winURL)
 }
 
@@ -135,7 +135,7 @@ const toggleMenu = () => {
 
 const openWindow = (url) => {
   settingWin = new BrowserWindow({
-    height: 480,
+    height: 530,
     width: 850,
     title: 'K-Pic',
     show: false,
@@ -283,6 +283,12 @@ ipcMain.on('file-upload', (event, arg) => {
 ipcMain.on('sim-upload', (event, arg) => {
   console.info('Start upload with', JSON.stringify(arg))
   uploader.simUpload(event, arg)
+})
+
+ipcMain.on('check-update', (event) => {
+  if (process.env.NODE_ENV !== 'development') {
+    autoUpdater.checkForUpdates()
+  }
 })
 
 ipcMain.on('copy-clipboard', (event, arg) => {

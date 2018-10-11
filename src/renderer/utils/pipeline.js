@@ -24,6 +24,9 @@ export const sender = {
   },
   simUpload (arg) {
     ipcRenderer.send('sim-upload', arg)
+  },
+  checkUpdate () {
+    ipcRenderer.send('check-update')
   }
 }
 

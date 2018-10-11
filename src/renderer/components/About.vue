@@ -20,14 +20,15 @@
                                 <div></div>
                                 <ul>
                                     <li @click="open(githubUrl)" class="stack_item"><img width="50px"
-                                                                                              src="../assets/icons/GitHub.svg">
+                                                                                         src="../assets/icons/GitHub.svg">
                                     </li>
                                     <li @click="open(readme)" class="stack_item"><b>README</b></li>
                                     <li @click="donateDialogShow = true" @mouseover="repeatStatus=true"
                                         @mouseleave="repeatStatus=false"
                                         :class="[{'repeat_anim': repeatStatus},'stack_item', 'animated', 'swing', 'delay-1s']"
-                                        style="color: #ec571d;"><b>{{$t('m.tips.donate')}}</b></li>
+                                        style="color: #ec571d;"><b>{{$t('m.donate')}}</b></li>
                                     <li @click="licenseDialog = true" class="stack_item">{{$t('m.license')}}</li>
+                                    <li @click="checkUpdate" class="stack_item">{{$t('m.checkUpdate')}}</li>
                                 </ul>
                                 <div class="foot_bar">
                                     <span>©2018</span><span> | </span><span class="kevin clickable"
@@ -40,7 +41,7 @@
                 </div>
             </el-main>
         </el-container>
-        <el-dialog width="60%" :title="$t('m.tips.donate')" :visible.sync="donateDialogShow">
+        <el-dialog width="60%" :title="$t('m.donate')" :visible.sync="donateDialogShow">
             <div style="margin-bottom: 5px">{{$t('m.tips.thanks')}}</div>
             <el-row :gutter="20">
                 <el-col :span="12"><img width="220px" src="@/assets/imgs/wechatpay.png"></el-col>
@@ -75,6 +76,10 @@
 </template>
 
 <script>
+  /* eslint-disable no-unused-vars */
+
+  import {sender, reciever} from '../utils/pipeline'
+
   export default {
     name: 'About',
     data () {
@@ -87,11 +92,12 @@
       }
     },
     methods: {
+
       open (url) {
         this.$electron.shell.openExternal(url)
       },
-      donateDialog () {
-
+      checkUpdate () {
+        sender.checkUpdate()
       }
     }
   }
