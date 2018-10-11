@@ -53,6 +53,7 @@ export const m = {
     upFailed: 'Upload failed',
     upload2: 'upload to',
     upFinished: 'Upload finished',
+    busy: 'Server is busy',
     upNum: 'Uploaded',
     file: 'file(s)',
     paste: 'The url(s) is(are) copied to your clipboard.'

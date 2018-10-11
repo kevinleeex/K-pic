@@ -19,14 +19,14 @@
                             <div class="list-block">
                                 <div></div>
                                 <ul>
-                                    <li @click="this.open('')" class="stack_item"><img width="50px"
-                                                                                       src="../assets/icons/GitHub.svg">
+                                    <li @click="open(githubUrl)" class="stack_item"><img width="50px"
+                                                                                              src="../assets/icons/GitHub.svg">
                                     </li>
-                                    <li class="stack_item"><b>README</b></li>
-                                        <li @click="donateDialogShow = true" @mouseover="repeatStatus=true"
-                                            @mouseleave="repeatStatus=false"
-                                            :class="[{'repeat_anim': repeatStatus},'stack_item', 'animated', 'swing', 'delay-1s']"
-                                            style="color: #ec571d;"><b>{{$t('m.tips.donate')}}</b></li>
+                                    <li @click="open(readme)" class="stack_item"><b>README</b></li>
+                                    <li @click="donateDialogShow = true" @mouseover="repeatStatus=true"
+                                        @mouseleave="repeatStatus=false"
+                                        :class="[{'repeat_anim': repeatStatus},'stack_item', 'animated', 'swing', 'delay-1s']"
+                                        style="color: #ec571d;"><b>{{$t('m.tips.donate')}}</b></li>
                                     <li @click="licenseDialog = true" class="stack_item">{{$t('m.license')}}</li>
                                 </ul>
                                 <div class="foot_bar">
@@ -79,6 +79,8 @@
     name: 'About',
     data () {
       return {
+        githubUrl: 'https://github.com/kevinleeex/K-pic',
+        readme: 'https://github.com/kevinleeex/K-pic/docs',
         repeatStatus: false,
         donateDialogShow: false,
         licenseDialog: false

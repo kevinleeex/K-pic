@@ -64,7 +64,7 @@ export const uploader = {
       }
     }
     save2clipboard(dstList.join('\n'))
-    event.sender.send('on-copied')
+    event.sender.send('on-copied', dstList.length)
   }
 }
 

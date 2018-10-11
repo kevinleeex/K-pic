@@ -53,6 +53,7 @@ export const m = {
     upFailed: '上传失败',
     upload2: '上传到',
     upFinished: '上传完成',
+    busy: '服务器正忙',
     upNum: '上传了',
     file: '个文件',
     paste: '链接已复制到剪贴板'

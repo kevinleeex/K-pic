@@ -21,13 +21,16 @@ export const sender = {
   },
   copy2clipboard (arg) {
     ipcRenderer.send('copy-clipboard', arg)
+  },
+  simUpload (arg) {
+    ipcRenderer.send('sim-upload', arg)
   }
 }
 
 export const reciever = {
   resCopy (callback) {
-    ipcRenderer.on('on-copied', (event) => {
-      callback()
+    ipcRenderer.on('on-copied', (event, arg) => {
+      callback(arg)
     })
   },
   getConfig (callback) {

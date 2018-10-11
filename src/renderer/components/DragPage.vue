@@ -14,7 +14,8 @@
                     :class="{'error': (currentServer.name==='')}">{{(currentServer.name==='')?$t('m.tips.unset'):currentServer.name}}</span>
             </div>
             <div id="back_container" class="no_drag">
-                <el-button class="btn_back" :type="signType" :disabled="btnActive" round>{{signal}} {{counter}}
+                <el-button class="btn_back" :type="signType" :disabled="btnActive" round>{{signal}}
+                    {{(counter===0)?'':counter}}
                 </el-button>
             </div>
             <div class="btn_panel">
@@ -92,19 +93,19 @@
 <script>
   /* eslint-disable no-unused-vars */
 
-  import {mapGetters, mapActions} from 'vuex'
-  import {sender, reciever} from '../utils/pipeline'
-  import {local} from '../utils/storage'
+  import {mapActions, mapGetters} from 'vuex'
+  import {reciever, sender} from '../utils/pipeline'
 
   export default {
     name: 'drag-page',
     components: {},
     data () {
       return {
+        pasteList: [],
         updateData: '',
         isMarkdown: true,
         upStatus: 'resting',
-        counter: '',
+        counter: 0, // upload files counter
         signType: '',
         dragTips: '',
         btnActive: true,
@@ -185,9 +186,14 @@
         this.toggleSettingWin(true)
       },
       processUpload (files) {
-        const fileNum = files.length
-        let fileCounter = 0
-        let pasteList = []
+        if (this.upStatus !== 'resting') {
+          this.$message({message: this.$t('m.tips.busy'), center: true})
+          return
+        }
+        this.upStatus = 'uploading'
+        this.counter += files.length
+        console.info('counter!!!!!', this.counter)
+        this.pasteList = []
         for (let f of files) {
           console.info('File(s) you dragged to here', f)
           let singleFile = {timestamp: new Date().getTime(), path: f}
@@ -198,38 +204,10 @@
           }
           sender.upload(upData)
         }
-
-        reciever.resUpload((data) => {
-          console.info('data: ' + JSON.stringify(data.data))
-          if (data.data.code === 200) {
-            this.$message({message: this.$t('m.tips.upSucceed'), center: true})
-            pasteList.push(data.data.fileInfo)
-          }
-          fileCounter += 1
-          console.info('total, count', fileNum, fileCounter)
-          this.counter = fileNum - fileCounter
-          console.warn(fileCounter)
-          if (fileCounter === fileNum) {
-            this.counter = ''
-            this.upStatus = 'resting'
-            fileCounter = 0
-            const srcData = {setting: {isMarkdown: this.isMarkdown}, files: pasteList}
-            sender.copy2clipboard(srcData)
-            reciever.resCopy(() => {
-              const notification = {
-                title: this.$t('m.tips.upFinished'),
-                body: this.$t('m.tips.upNum') + fileNum + this.$t('m.tips.file') + ', ' + this.$t('m.tips.paste')
-              }
-              const notificationButton = document.getElementById('basic-noti')
-              const myNotification = new window.Notification(notification.title, notification)
-            })
-          }
-        })
       },
       drop2upload (event) {
         event.preventDefault()
         event.stopPropagation()
-        this.upStatus = 'uploading'
         if (this.currentServer.name === '' || this.currentServer.name === undefined) {
           this.$notify({
             title: this.$t('m.tips.warning'),
@@ -292,6 +270,28 @@
       this.options[0].label = this.$t('m.scale')
       reciever.resTrayDrops((files) => {
         this.tray2upload(files)
+      })
+      reciever.resCopy((fileNum) => {
+        const notification = {
+          title: this.$t('m.tips.upFinished'),
+          body: this.$t('m.tips.upNum') + fileNum + this.$t('m.tips.file') + ', ' + this.$t('m.tips.paste')
+        }
+        const notificationButton = document.getElementById('basic-noti')
+        const myNotification = new window.Notification(notification.title, notification)
+      })
+
+      reciever.resUpload((data) => {
+        console.info('data: ' + JSON.stringify(data.data))
+        if (data.data.code === 200) {
+          this.$message({message: this.$t('m.tips.upSucceed'), center: true})
+          this.pasteList.push(data.data.fileInfo)
+        }
+        this.counter -= 1
+        if (this.counter === 0) {
+          this.upStatus = 'resting'
+          const srcData = {setting: {isMarkdown: this.isMarkdown}, files: this.pasteList}
+          sender.copy2clipboard(srcData)
+        }
       })
     }
   }
