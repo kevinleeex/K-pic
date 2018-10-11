@@ -54,6 +54,12 @@ export const reciever = {
     ipcRenderer.on('on-update', (event, arg) => {
       callback(arg)
     })
+  },
+  resTrayDrops (callback) {
+    ipcRenderer.on('tray-drops', (event, arg) => {
+      console.info('resTrayDrops')
+      callback(arg)
+    })
   }
 }
 

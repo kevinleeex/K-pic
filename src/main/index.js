@@ -68,6 +68,11 @@ const createTray = () => {
     console.info('right-click tray')
     toggleMenu()
   })
+  tray.on('drop-files', function (event, files) {
+    console.info(JSON.stringify(files))
+    window.webContents.send('tray-drops', files)
+    // event.sender.send('tray-drops', files)
+  })
   tray.on('double-click', toggleWindow)
   tray.on('click', function (event) {
     console.info('click tray')
@@ -223,9 +228,9 @@ function updateSets () {
     }
   })
   autoUpdater.on('error', (err) => {
+    console.error(err)
     dialog.showMessageBox({title: '更新错误', message: '更新时出现错误(Update failed)'}, () => {
     })
-    sendStatusToWindow('Error in auto-updater. ' + err)
   })
   autoUpdater.on('download-progress', (progressObj) => {
     window.setProgressBar(progressObj.percent / 100)
@@ -236,11 +241,6 @@ function updateSets () {
       autoUpdater.quitAndInstall()
     })
   })
-}
-
-const sendStatusToWindow = (text) => {
-  console.info(text)
-  window.webContents.send('on-update', text)
 }
 
 updateSets()

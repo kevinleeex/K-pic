@@ -184,29 +184,13 @@
       setting () {
         this.toggleSettingWin(true)
       },
-      uploading (callback) {
-
-      },
-      drop2upload (event) {
-        event.preventDefault()
-        event.stopPropagation()
-        this.upStatus = 'uploading'
-        if (this.currentServer.name === '' || this.currentServer.name === undefined) {
-          this.$notify({
-            title: this.$t('m.tips.warning'),
-            message: this.$t('m.tips.unsetConfig'),
-            duration: 2000,
-            type: 'warning'
-          })
-          return
-        }
-        let files = event.dataTransfer.files // get upload files
+      processUpload (files) {
         const fileNum = files.length
         let fileCounter = 0
         let pasteList = []
         for (let f of files) {
-          console.info('File(s) you dragged to here', f.path)
-          let singleFile = {timestamp: new Date().getTime(), path: f.path}
+          console.info('File(s) you dragged to here', f)
+          let singleFile = {timestamp: new Date().getTime(), path: f}
           let upData = {
             serverInfo: this.currentServer,
             fileInfo: singleFile,
@@ -242,6 +226,39 @@
           }
         })
       },
+      drop2upload (event) {
+        event.preventDefault()
+        event.stopPropagation()
+        this.upStatus = 'uploading'
+        if (this.currentServer.name === '' || this.currentServer.name === undefined) {
+          this.$notify({
+            title: this.$t('m.tips.warning'),
+            message: this.$t('m.tips.unsetConfig'),
+            duration: 2000,
+            type: 'warning'
+          })
+          return
+        }
+        let files = event.dataTransfer.files // get upload files
+        let filePathList = []
+        for (let file of files) {
+          filePathList.push(file.path)
+        }
+        this.processUpload(filePathList)
+      },
+      tray2upload (files) {
+        this.upStatus = 'uploading'
+        if (this.currentServer.name === '' || this.currentServer.name === undefined) {
+          this.$notify({
+            title: this.$t('m.tips.warning'),
+            message: this.$t('m.tips.unsetConfig'),
+            duration: 2000,
+            type: 'warning'
+          })
+          return
+        }
+        this.processUpload(files)
+      },
       dragOver (event) {
         event.preventDefault()
         event.stopPropagation()
@@ -273,14 +290,8 @@
       })
       this.dragTips = this.$t('m.tips.drag')
       this.options[0].label = this.$t('m.scale')
-      reciever.resUpdate((data) => {
-        alert()
-        this.updateDialog = true
-        this.updateData = data
-        // let container = document.getElementById('messages')
-        // let message = document.createElement('div')
-        // message.innerHTML = data
-        // container.appendChild(message)
+      reciever.resTrayDrops((files) => {
+        this.tray2upload(files)
       })
     }
   }
