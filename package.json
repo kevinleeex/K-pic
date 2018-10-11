@@ -7,6 +7,7 @@
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
+    "build:rmac": "node .electron-vue/build.js && electron-builder --mac -p always",
     "build:all": "node .electron-vue/build.js && electron-builder -wml",
     "build:win": "node .electron-vue/build.js && electron-builder --win",
     "build:linux": "node .electron-vue/build.js && electron-builder --linux",
@@ -24,13 +25,6 @@
     "unit": "karma start test/unit/karma.conf.js",
     "postinstall": "npm run lint:fix"
   },
-  "publish": [
-    {
-      "provider": "github",
-      "repo": "K-pic",
-      "owner": "kevinleeex"
-    }
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kevinleeex/K-pic.git"
@@ -41,6 +35,13 @@
     "directories": {
       "output": "build"
     },
+    "publish": [
+      {
+        "provider": "github",
+        "repo": "K-pic",
+        "owner": "kevinleeex"
+      }
+    ],
     "files": [
       "dist/electron/**/*"
     ],

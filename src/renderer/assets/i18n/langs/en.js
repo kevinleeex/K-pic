@@ -5,7 +5,7 @@ export const m = {
   history: 'History',
   power: 'Powered by',
   version: 'Version',
-  vno: '0.0.1',
+  vno: '0.0.4',
   intro: '"A Simple Image Uploader for Cloud Storage"',
   about: 'About',
   common: 'Common',

@@ -48,11 +48,11 @@
         </main>
         <div class="footer">
             <div class="btn" @click="setting"><img src="../assets/icons/setting.svg"></div>
-            <div class="btn" @click="dialogVisible = true"><img src="../assets/icons/info.svg"></div>
+            <div class="btn" @click="infoDialog = true"><img src="../assets/icons/info.svg"></div>
         </div>
         <el-dialog
                 title=""
-                :visible.sync="dialogVisible"
+                :visible.sync="infoDialog"
                 width="60%">
             <el-container>
                 <el-header>
@@ -80,6 +80,12 @@
                 </el-footer>
             </el-container>
         </el-dialog>
+
+        <el-dialog title=""
+                   :visible.sync="updateDialog"
+                   width="60%">
+            <div id="messages">{{updateData}}</div>
+        </el-dialog>
     </div>
 </template>
 
@@ -95,13 +101,15 @@
     components: {},
     data () {
       return {
+        updateData: '',
         isMarkdown: true,
         upStatus: 'resting',
         counter: '',
         signType: '',
         dragTips: '',
         btnActive: true,
-        dialogVisible: false,
+        updateDialog: false,
+        infoDialog: false,
         options: [{
           value: '0',
           label: '',
@@ -169,7 +177,7 @@
     },
     methods: {
       ...mapActions([
-        'toggleSettingWin', 'setConfig', 'addHistory', 'delHistory']),
+        'toggleSettingWin', 'setConfig']),
       open (link) {
         this.$electron.shell.openExternal(link)
       },
@@ -266,10 +274,13 @@
       this.dragTips = this.$t('m.tips.drag')
       this.options[0].label = this.$t('m.scale')
       reciever.resUpdate((data) => {
-        let container = document.getElementById('messages')
-        let message = document.createElement('div')
-        message.innerHTML = data
-        container.appendChild(message)
+        alert()
+        this.updateDialog = true
+        this.updateData = data
+        // let container = document.getElementById('messages')
+        // let message = document.createElement('div')
+        // message.innerHTML = data
+        // container.appendChild(message)
       })
     }
   }

@@ -3,6 +3,7 @@ const {
   app,
   BrowserWindow,
   ipcMain,
+  dialog,
   Menu,
   Tray
 } = require('electron')
@@ -22,60 +23,7 @@ let contextMenu
  */
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
-  // const server = 'https://github.com/kevinleeex/K-pic'
-  // const feed = `${server}/update/${process.platform}/${app.getVersion()}`
-  //
-  // autoUpdater.setFeedURL(feed)
-  //
-  // setInterval(() => {
-  //   autoUpdater.checkForUpdates()
-  // }, 60000)
-  //
-  // autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-  //   const dialogOpts = {
-  //     type: 'info',
-  //     buttons: ['Restart', 'Later'],
-  //     title: 'Application Update',
-  //     message: process.platform === 'win32' ? releaseNotes : releaseName,
-  //     detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-  //   }
-  //
-  //   dialog.showMessageBox(dialogOpts, (response) => {
-  //     if (response === 0) autoUpdater.quitAndInstall()
-  //   })
-  // })
-  //
-  // autoUpdater.on('error', message => {
-  //   console.error('There was a problem updating the application')
-  //   console.error(message)
-  // })
 }
-
-function updateSets () {
-  console.info('App starting...')
-  autoUpdater.on('checking-for-update', () => {
-    sendStatusToWindow('Checking for update...')
-  })
-  autoUpdater.on('update-available', (info) => {
-    sendStatusToWindow('Update available.')
-  })
-  autoUpdater.on('update-not-available', (info) => {
-    sendStatusToWindow('Update not available.')
-  })
-  autoUpdater.on('error', (err) => {
-    sendStatusToWindow('Error in auto-updater. ' + err)
-  })
-  autoUpdater.on('download-progress', (progressObj) => {
-    let logMessage = 'Download speed: ' + progressObj.bytesPerSecond
-    logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%'
-    logMessage = logMessage + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
-    sendStatusToWindow(logMessage)
-  })
-  autoUpdater.on('update-downloaded', (info) => {
-    sendStatusToWindow('Update downloaded')
-  })
-}
-updateSets()
 
 const storagePath = path.join(os.homedir(), 'k-pic')
 storage.setDataPath(storagePath)
@@ -93,6 +41,9 @@ app.dock.hide()
 app.on('ready', () => {
   createTray()
   createWindow()
+  if (process.env.NODE_ENV !== 'development') {
+    autoUpdater.checkForUpdates()
+  }
 })
 
 // Quit the app when the window is closed
@@ -100,7 +51,9 @@ app.on('window-all-closed', () => {
   app.quit()
 })
 
+// define vars
 const logo = `${__static}/img/kpicTemplate.png`
+let manualUpdate = false
 
 const createTray = () => {
   tray = new Tray(logo)
@@ -159,12 +112,8 @@ const createWindow = () => {
     }
   })
   // load the user interface
+  window.webContents.openDevTools()
   window.loadURL(winURL)
-}
-
-const sendStatusToWindow = (text) => {
-  console.info(text)
-  window.webContents.send('message', text)
 }
 
 const toggleWindow = () => {
@@ -245,6 +194,56 @@ const showWindow = () => {
   window.show()
   window.focus()
 }
+
+function updateSets () {
+  console.info('App starting...')
+  autoUpdater.on('checking-for-update', () => {
+    console.info('checking for update')
+  })
+  autoUpdater.on('update-available', (info) => {
+    app.dock.show()
+    dialog.showMessageBox({
+      type: 'info',
+      title: '[K-pic]发现可用更新',
+      message: '发现可用更新, 是否现在更新?(Update now?)',
+      detail: '发布时间: [' + info.releaseDate + '] ' + '版本: v' + info.version + ', \n' + info.releaseNote,
+      buttons: ['确定(Y)', '取消(N)']
+    }, (buttonIndex) => {
+      if (buttonIndex === 0) {
+        autoUpdater.downloadUpdate()
+      } else {
+        dialog.close()
+      }
+    })
+  })
+  autoUpdater.on('update-not-available', (info) => {
+    if (manualUpdate) {
+      dialog.showMessageBox({title: '当前是最新版本', message: '当前是最新版本(Up to date)'}, () => {
+      })
+    }
+  })
+  autoUpdater.on('error', (err) => {
+    dialog.showMessageBox({title: '更新错误', message: '更新时出现错误(Update failed)'}, () => {
+    })
+    sendStatusToWindow('Error in auto-updater. ' + err)
+  })
+  autoUpdater.on('download-progress', (progressObj) => {
+    window.setProgressBar(progressObj.percent / 100)
+  })
+  autoUpdater.on('update-downloaded', (info) => {
+    app.dock.hide()
+    dialog.showMessageBox({title: '更新下载完成', message: '应用将在退出后完成更新...(Quit and install)'}, () => {
+      autoUpdater.quitAndInstall()
+    })
+  })
+}
+
+const sendStatusToWindow = (text) => {
+  console.info(text)
+  window.webContents.send('on-update', text)
+}
+
+updateSets()
 
 ipcMain.on('show-window', () => {
   showWindow()
