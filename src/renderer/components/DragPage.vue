@@ -291,6 +291,10 @@
           sender.copy2clipboard(srcData)
         }
       })
+
+      reciever.resLog((data) => {
+        console.info(JSON.stringify(data))
+      })
     }
   }
 </script>

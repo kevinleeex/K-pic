@@ -51,13 +51,8 @@ export const reciever = {
       callback(arg)
     })
   },
-  resUploadFinish (callback) {
-    ipcRenderer.on('on-upload-finish', (event, arg) => {
-      callback(arg)
-    })
-  },
-  resUpdate (callback) {
-    ipcRenderer.on('on-update', (event, arg) => {
+  resLog (callback) {
+    ipcRenderer.on('on-log', (event, arg) => {
       callback(arg)
     })
   },

@@ -92,5 +92,10 @@ export const control = {
       }
       event.sender.send('on-save', retMsg)
     })
+  },
+
+  // send log
+  sendLog (event, arg) {
+    event.sender.send('on-send-log', arg)
   }
 }

@@ -22,6 +22,7 @@ This is a simple cloud image uploader GUI tool. (Not only for the images in fact
    - [ ] AliYun OSS
    - [ ] QiNiu Cloud Storage
    - [ ] Amazon S3
+   - [ ] Weibo Image Storage 
 - [x] 🍔 Drag & Drop to upload
   - [x] Upload through window
   - [x] Upload through system tray icon

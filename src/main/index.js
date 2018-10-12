@@ -9,18 +9,22 @@ const {
   Tray
 } = require('electron')
 const os = require('os')
+const fs = require('fs')
 const path = require('path')
+const crypto = require('crypto')
 const storage = require('electron-json-storage')
 const {autoUpdater} = require('electron-updater')
+const {download} = require('electron-dl')
 const {control} = require('./control')
 const {uploader} = require('./uploader')
+const {streamDownloader} = require('./utils/StreamDownloader')
 let tray
 let window
 let settingWin
 let contextMenu
 let manualUpdate
 
-const releaseBase = 'https://github.com/kevinleeex/K-pic/releases/tag/v'
+const productionDev = true
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -30,6 +34,9 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 const storagePath = path.join(os.homedir(), 'k-pic')
+if (!fs.existsSync(storagePath)) {
+  fs.mkdirSync(storagePath)
+}
 storage.setDataPath(storagePath)
 
 const winURL = process.env.NODE_ENV === 'development'
@@ -122,7 +129,9 @@ const createWindow = () => {
     }
   })
   // load the user interface
-  // window.webContents.openDevTools()
+  if (productionDev) {
+    window.webContents.openDevTools()
+  }
   window.loadURL(winURL)
 }
 
@@ -206,6 +215,96 @@ const showWindow = () => {
 }
 
 // update section
+function computeSHA (file) {
+  if (fs.existsSync(file)) {
+    let buffer = fs.readFileSync(file)
+    let fsHash = crypto.createHash('sha512')
+    fsHash.update(buffer)
+    let sha512 = fsHash.digest('hex')
+    console.info(sha512)
+    return sha512
+  } else {
+    return 'File does not exist.'
+  }
+}
+
+function updateNow (info) {
+  console.info('updateNow')
+  app.dock.show()
+  let suffix = ''
+  if (process.platform === 'darwin') {
+    suffix = '.dmg'
+    sendMessage(suffix)
+  }
+  const version = '0.1.0'
+  const remoteBase = 'http://github.com/kevinleeex/K-pic/releases/download/v' + version
+  const remoteFileName = 'k-pic-' + version + suffix
+  const remoteFile = path.join(remoteBase, remoteFileName)
+
+  // local
+  const localPackageBase = path.join(storagePath, 'tmp')
+  if (!fs.existsSync(localPackageBase)) {
+    fs.mkdirSync(localPackageBase)
+  }
+  const localFileName = 'update' + suffix
+  const localFile = path.join(localPackageBase, localFileName)
+
+  sendMessage({remoteFile: remoteFile, localFile: localFile})
+  // const curFile = shell.openItem()
+  const config = {
+    directory: remoteFile,
+    filename: localFile
+    // onProgress: function (received, total) {
+    //   let progress = received / total
+    //   window.setProgressBar(progress)
+    //   console.log(progress + ' | ' + received + ' bytes out of ' + total + ' bytes.')
+    //   sendMessage(progress + ' | ' + received + ' bytes out of ' + total + ' bytes.')
+    // },
+    // onError: function () {
+    //   sendMessage('download error')
+    //   fs.unlinkSync(localFile)
+    // }
+  }
+
+  // comment the SHA512 validation
+  // const remoteSHA = info.files[1].sha512
+  // check the validation of the existed update package.
+  // const localSHA = computeSHA(localFile)
+  // console.info('SHA512 remote: %s, local: %s', remoteSHA, localSHA)
+  // sendMessage({remote: String(remoteSHA), local: String(localSHA)})
+  // if (String(remoteSHA) === String(localSHA)) {
+  //   shell.openItem(localFile)
+  //   dialog.showMessageBox({
+  //     title: '更新下载完成',
+  //     message: '下载完成，点击退出应用并手动安装更新...',
+  //     detail: 'Quit and install (manually)'
+  //   }, () => {
+  //     app.quit()
+  //   })
+  // } else {
+  //   if (fs.existsSync(localFile)) {
+  //     fs.unlinkSync(localFile)
+  //   }
+
+  sendMessage('Start download')
+  download(window, config.remoteFile, config).then(dl => )
+  streamDownloader.download(config).then(() => {
+    console.info('Update downloaded')
+    shell.openItem(localFile)
+    dialog.showMessageBox({
+      title: '更新下载完成',
+      message: '下载完成，点击退出应用并手动安装更新...',
+      detail: 'Quit and install (manually)'
+    }, () => {
+      app.quit()
+    })
+  })
+  // }
+}
+
+function sendMessage (log) {
+  window.webContents.send('on-log', log)
+}
 
 function updateSets () {
   console.info('App starting...')
@@ -217,13 +316,15 @@ function updateSets () {
       type: 'info',
       title: '[K-pic]发现可用更新',
       message: '[K-pic]发现可用更新, 是否前往下载?(Update now?)',
-      detail: '发布时间: [' + info.releaseDate + '] ' + '版本: v' + info.version + ', \n' + info.releaseNotes,
+      detail: '发布时间: [' + info.releaseDate + '] ' + '版本: v' + info.version + ', \n' + info.releaseNotes + info.files[1].sha512,
       buttons: ['是(Y)', '否(N)']
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
-        shell.openExternal(releaseBase + info.version)
+        updateNow(info)
+        // shell.openExternal(releaseBase + info.version)
         // autoUpdater.downloadUpdate()
       } else {
+        app.dock.hide()
       }
     })
   })
@@ -292,9 +393,10 @@ ipcMain.on('sim-upload', (event, arg) => {
 })
 
 ipcMain.on('check-update', (event) => {
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV !== 'development' || productionDev === true) {
     manualUpdate = true
-    autoUpdater.checkForUpdates()
+    updateNow()
+    // autoUpdater.checkForUpdates()
   }
 })
 
