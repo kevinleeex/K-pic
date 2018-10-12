@@ -276,7 +276,6 @@
           title: this.$t('m.tips.upFinished'),
           body: this.$t('m.tips.upNum') + fileNum + this.$t('m.tips.file') + ', ' + this.$t('m.tips.paste')
         }
-        const notificationButton = document.getElementById('basic-noti')
         const myNotification = new window.Notification(notification.title, notification)
       })
 

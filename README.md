@@ -37,6 +37,9 @@ This is a simple cloud image uploader GUI tool. (Not only for the images in fact
 
 See [K-pic Releases](https://github.com/kevinleeex/K-pic/releases)
 
+## Previews
+
+
 
 ## Getting Started
 
@@ -66,7 +69,7 @@ or
 yarn install
 ```
 
-> yarn command is recommended as you could use ``` yarn clean``` to reduce the size of the package.
+> yarn command is recommended as you could use ``` yarn autoclean``` to reduce the size of the package.
 
  ### Deployment
 
@@ -112,7 +115,7 @@ I would like to extend my sincere gratitude to the authors and contributors of t
 
 ## Support me
 
-If this project helps you, you can support me to do better.
+If this project helps you, you can support me to do better.  
 <a href="https://paypal.me/kevinleeex"><img alt="Coffee" src="https://img.shields.io/badge/PayPal me a-Coffee-7A501E.svg?longCache=true&style=for-the-badge"></a>
 
 

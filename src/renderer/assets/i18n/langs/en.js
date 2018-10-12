@@ -5,7 +5,7 @@ export const m = {
   history: 'History',
   power: 'Powered by',
   version: 'Version',
-  vno: '0.1.2',
+  vno: '0.0.9',
   intro: '"A Simple Image Uploader for Cloud Storage"',
   about: 'About',
   common: 'Common',
@@ -55,8 +55,8 @@ export const m = {
     upload2: 'upload to',
     upFinished: 'Upload finished',
     busy: 'Server is busy',
-    upNum: 'Uploaded',
-    file: 'file(s)',
-    paste: 'The url(s) is(are) copied to your clipboard.'
+    upNum: 'Uploaded ',
+    file: ' file(s)',
+    paste: 'The url is copied to your clipboard.'
   }
 }
