@@ -4,6 +4,7 @@ const {
   BrowserWindow,
   ipcMain,
   dialog,
+  shell,
   Menu,
   Tray
 } = require('electron')
@@ -17,6 +18,9 @@ let tray
 let window
 let settingWin
 let contextMenu
+let manualUpdate
+
+const releaseBase = 'https://github.com/kevinleeex/K-pic/releases/tag/v'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -39,9 +43,11 @@ const setURL = process.env.NODE_ENV === 'development'
 // Hide the app in dock on Mac
 app.dock.hide()
 app.on('ready', () => {
+  manualUpdate = false
   createTray()
   createWindow()
   if (process.env.NODE_ENV !== 'development') {
+    // autoUpdater.checkForUpdatesAndNotify()
     autoUpdater.checkForUpdates()
   }
 })
@@ -53,7 +59,6 @@ app.on('window-all-closed', () => {
 
 // define vars
 const logo = `${__static}/img/kpicTemplate.png`
-let manualUpdate = false
 
 const createTray = () => {
   tray = new Tray(logo)
@@ -140,7 +145,7 @@ const openWindow = (url) => {
     title: 'K-Pic',
     show: false,
     useContentSize: true,
-    alwaysOnTop: true,
+    alwaysOnTop: false,
     transparent: false,
     frame: false,
     darkTheme: true,
@@ -200,51 +205,52 @@ const showWindow = () => {
   window.focus()
 }
 
+// update section
+
 function updateSets () {
   console.info('App starting...')
   autoUpdater.on('checking-for-update', () => {
     console.info('checking for update')
   })
   autoUpdater.on('update-available', (info) => {
-    app.dock.show()
     dialog.showMessageBox({
       type: 'info',
       title: '[K-pic]发现可用更新',
-      message: '发现可用更新, 是否现在更新?(Update now?)',
+      message: '[K-pic]发现可用更新, 是否前往下载?(Update now?)',
       detail: '发布时间: [' + info.releaseDate + '] ' + '版本: v' + info.version + ', \n' + info.releaseNotes,
-      buttons: ['确定(Y)', '取消(N)']
+      buttons: ['是(Y)', '否(N)']
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
-        autoUpdater.downloadUpdate()
+        shell.openExternal(releaseBase + info.version)
+        // autoUpdater.downloadUpdate()
       } else {
-        dialog.close()
       }
     })
   })
   autoUpdater.on('update-not-available', (info) => {
     if (manualUpdate) {
-      dialog.showMessageBox({title: '当前是最新版本', message: '当前是最新版本(Up to date)'}, () => {
+      dialog.showMessageBox({title: '当前是最新版本', message: '当前是最新版本: v' + info.version, detail: 'Up to date'}, () => {
+        manualUpdate = false
       })
     }
   })
-  autoUpdater.on('error', (err) => {
-    console.error(err)
-    dialog.showMessageBox({title: '更新错误', message: '更新时出现错误(Update failed)'}, () => {
-    })
-  })
-  autoUpdater.on('download-progress', (progressObj) => {
-    window.setProgressBar(progressObj.percent / 100)
-  })
-  autoUpdater.on('update-downloaded', (info) => {
-    app.dock.hide()
-    dialog.showMessageBox({title: '更新下载完成', message: '应用将在退出后完成更新...(Quit and install)'}, () => {
-      autoUpdater.quitAndInstall()
-    })
-  })
+  // autoUpdater.on('error', (error) => {
+  //   dialog.showErrorBox('出现错误: ', error == null ? 'unknown' : (error.stack || error).toString())
+  // })
+  // autoUpdater.on('download-progress', (progressObj) => {
+  //   window.setProgressBar(progressObj.percent / 100)
+  // })
+  // autoUpdater.on('update-downloaded', (info) => {
+  //   dialog.showMessageBox({title: '更新下载完成', message: '下载完成，应用将在退出后完成更新...', detail: 'Quit and install'}, () => {
+  //     autoUpdater.quitAndInstall()
+  //   })
+  // })
 }
 
 updateSets()
+// end update section
 
+// listen request
 ipcMain.on('show-window', () => {
   showWindow()
 })
@@ -287,6 +293,7 @@ ipcMain.on('sim-upload', (event, arg) => {
 
 ipcMain.on('check-update', (event) => {
   if (process.env.NODE_ENV !== 'development') {
+    manualUpdate = true
     autoUpdater.checkForUpdates()
   }
 })

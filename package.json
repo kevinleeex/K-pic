@@ -1,6 +1,6 @@
 {
   "name": "k-pic",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "author": "Kevin <kevinleeex@foxmail.com>",
   "description": "This is a cloud image uploader for Mac & PC(*) built with electron & vue.",
   "license": "MIT",
@@ -104,7 +104,7 @@
     "electron": "^2.0.4",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
-    "electron-builder": "^20.19.2",
+    "electron-builder": "20.22.0",
     "babel-eslint": "^8.2.3",
     "eslint": "^4.19.1",
     "eslint-friendly-formatter": "^4.0.1",

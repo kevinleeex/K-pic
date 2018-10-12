@@ -41,8 +41,9 @@
                 </div>
             </el-main>
         </el-container>
-        <el-dialog width="60%" :title="$t('m.donate')" :visible.sync="donateDialogShow">
-            <div style="margin-bottom: 5px">{{$t('m.tips.thanks')}}</div>
+        <el-dialog top="10vh" width="70%" :title="$t('m.donate')" :visible.sync="donateDialogShow">
+            <div style="margin-bottom: 2px">{{$t('m.tips.thanks')}}</div>
+            <div class="link" @click="open('https://paypal.me/kevinleeex')"><b>Paypal</b> me a coffee.</div>
             <el-row :gutter="20">
                 <el-col :span="12"><img width="220px" src="@/assets/imgs/wechatpay.png"></el-col>
                 <el-col :span="12"><img width="220px" src="@/assets/imgs/alipay.png"></el-col>
@@ -144,6 +145,14 @@
     .kevin:hover {
         transition-duration: 0.5s;
         color: #95dafc;
+    }
+
+    .link{
+
+    }
+
+    .link:hover{
+        cursor: pointer;
     }
 
 
