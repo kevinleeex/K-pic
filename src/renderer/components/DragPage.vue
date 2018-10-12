@@ -225,7 +225,6 @@
         this.processUpload(filePathList)
       },
       tray2upload (files) {
-        this.upStatus = 'uploading'
         if (this.currentServer.name === '' || this.currentServer.name === undefined) {
           this.$notify({
             title: this.$t('m.tips.warning'),
@@ -248,7 +247,7 @@
         this.dragTips = this.$t('m.tips.drag')
       }
     },
-    mounted: function () {
+    created: function () {
       sender.loadConfig()
       reciever.getConfig((data) => {
         console.info('data: ' + JSON.stringify(data.data))
