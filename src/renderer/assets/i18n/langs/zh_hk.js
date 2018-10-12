@@ -5,7 +5,7 @@ export const m = {
   history: '歷史記錄',
   power: '驅動',
   version: '版本',
-  vno: '0.1.1',
+  vno: '0.1.2',
   intro: '「一个簡便的圖床上傳工具」',
   about: '關於',
   common: '常規',
