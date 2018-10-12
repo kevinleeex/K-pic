@@ -17,14 +17,13 @@ const {autoUpdater} = require('electron-updater')
 const {download} = require('electron-dl')
 const {control} = require('./control')
 const {uploader} = require('./uploader')
-const {streamDownloader} = require('./utils/StreamDownloader')
 let tray
 let window
 let settingWin
 let contextMenu
 let manualUpdate
 
-const productionDev = true
+const productionDev = false
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -236,70 +235,41 @@ function updateNow (info) {
     suffix = '.dmg'
     sendMessage(suffix)
   }
-  const version = '0.1.0'
-  const remoteBase = 'http://github.com/kevinleeex/K-pic/releases/download/v' + version
-  const remoteFileName = 'k-pic-' + version + suffix
+  const remoteBase = 'http://github.com/kevinleeex/K-pic/releases/download/v' + info.version
+  const remoteFileName = 'k-pic-' + info.version + suffix
   const remoteFile = path.join(remoteBase, remoteFileName)
 
   // local
   const localPackageBase = path.join(storagePath, 'tmp')
   if (!fs.existsSync(localPackageBase)) {
+    fs.rmdirSync(localPackageBase)
     fs.mkdirSync(localPackageBase)
   }
   const localFileName = 'update' + suffix
   const localFile = path.join(localPackageBase, localFileName)
 
   sendMessage({remoteFile: remoteFile, localFile: localFile})
-  // const curFile = shell.openItem()
   const config = {
-    directory: remoteFile,
-    filename: localFile
-    // onProgress: function (received, total) {
-    //   let progress = received / total
-    //   window.setProgressBar(progress)
-    //   console.log(progress + ' | ' + received + ' bytes out of ' + total + ' bytes.')
-    //   sendMessage(progress + ' | ' + received + ' bytes out of ' + total + ' bytes.')
-    // },
-    // onError: function () {
-    //   sendMessage('download error')
-    //   fs.unlinkSync(localFile)
-    // }
+    directory: localPackageBase,
+    filename: localFileName,
+    onProgress: (progress) => {
+      console.log(progress * 100 + '%')
+      sendMessage('Cur progress: %s %' + progress * 100)
+    },
+    onStarted: (item) => {
+      sendMessage('Started download')
+    }
   }
 
-  // comment the SHA512 validation
-  // const remoteSHA = info.files[1].sha512
-  // check the validation of the existed update package.
-  // const localSHA = computeSHA(localFile)
-  // console.info('SHA512 remote: %s, local: %s', remoteSHA, localSHA)
-  // sendMessage({remote: String(remoteSHA), local: String(localSHA)})
-  // if (String(remoteSHA) === String(localSHA)) {
-  //   shell.openItem(localFile)
-  //   dialog.showMessageBox({
-  //     title: '更新下载完成',
-  //     message: '下载完成，点击退出应用并手动安装更新...',
-  //     detail: 'Quit and install (manually)'
-  //   }, () => {
-  //     app.quit()
-  //   })
-  // } else {
-  //   if (fs.existsSync(localFile)) {
-  //     fs.unlinkSync(localFile)
-  //   }
-
   sendMessage('Start download')
-  download(window, config.remoteFile, config).then(dl => )
-  streamDownloader.download(config).then(() => {
-    console.info('Update downloaded')
+  download(BrowserWindow.getFocusedWindow(), remoteFile, config).then(() => dialog.showMessageBox({
+    title: '下载完成',
+    message: '下载完成，点击更新到: v' + info.version,
+    detail: 'Click quit and install (manually)...'
+  }, () => {
+    manualUpdate = false
     shell.openItem(localFile)
-    dialog.showMessageBox({
-      title: '更新下载完成',
-      message: '下载完成，点击退出应用并手动安装更新...',
-      detail: 'Quit and install (manually)'
-    }, () => {
-      app.quit()
-    })
-  })
-  // }
+  })).catch(console.error)
 }
 
 function sendMessage (log) {
@@ -315,8 +285,8 @@ function updateSets () {
     dialog.showMessageBox({
       type: 'info',
       title: '[K-pic]发现可用更新',
-      message: '[K-pic]发现可用更新, 是否前往下载?(Update now?)',
-      detail: '发布时间: [' + info.releaseDate + '] ' + '版本: v' + info.version + ', \n' + info.releaseNotes + info.files[1].sha512,
+      message: '[K-pic]发现可用更新, 是否下载?(Update now?)',
+      detail: '发布时间: [' + info.releaseDate + '] ' + '版本: v' + info.version + ', \n' + (info.releaseNotes).replace(/<(?:.|\n)*?>/gm, ''),
       buttons: ['是(Y)', '否(N)']
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
@@ -335,17 +305,6 @@ function updateSets () {
       })
     }
   })
-  // autoUpdater.on('error', (error) => {
-  //   dialog.showErrorBox('出现错误: ', error == null ? 'unknown' : (error.stack || error).toString())
-  // })
-  // autoUpdater.on('download-progress', (progressObj) => {
-  //   window.setProgressBar(progressObj.percent / 100)
-  // })
-  // autoUpdater.on('update-downloaded', (info) => {
-  //   dialog.showMessageBox({title: '更新下载完成', message: '下载完成，应用将在退出后完成更新...', detail: 'Quit and install'}, () => {
-  //     autoUpdater.quitAndInstall()
-  //   })
-  // })
 }
 
 updateSets()
@@ -395,8 +354,8 @@ ipcMain.on('sim-upload', (event, arg) => {
 ipcMain.on('check-update', (event) => {
   if (process.env.NODE_ENV !== 'development' || productionDev === true) {
     manualUpdate = true
-    updateNow()
-    // autoUpdater.checkForUpdates()
+    // updateNow()
+    autoUpdater.checkForUpdates()
   }
 })
 
