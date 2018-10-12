@@ -1,6 +1,6 @@
 {
   "name": "k-pic",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "author": "Kevin <kevinleeex@foxmail.com>",
   "description": "This is a cloud image uploader for Mac & PC(*) built with electron & vue.",
   "license": "MIT",
@@ -61,12 +61,22 @@
       ]
     },
     "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "icon": "build/icons/icon.icns"
     },
     "win": {
+      "target": [
+        "nsis"
+      ],
       "icon": "build/icons/icon.ico"
     },
     "linux": {
+      "target": [
+        "deb"
+      ],
       "icon": "build/icons"
     }
   },
