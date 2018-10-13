@@ -12,6 +12,7 @@ const os = require('os')
 const fs = require('fs')
 const path = require('path')
 const crypto = require('crypto')
+const rimraf = require('rimraf')
 const storage = require('electron-json-storage')
 const {autoUpdater} = require('electron-updater')
 const {download} = require('electron-dl')
@@ -23,7 +24,7 @@ let settingWin
 let contextMenu
 let manualUpdate
 
-const productionDev = false
+const productionDev = true
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -229,7 +230,6 @@ function computeSHA (file) {
 
 function updateNow (info) {
   console.info('updateNow')
-  app.dock.show()
   let suffix = ''
   if (process.platform === 'darwin') {
     suffix = '.dmg'
@@ -241,8 +241,8 @@ function updateNow (info) {
 
   // local
   const localPackageBase = path.join(storagePath, 'tmp')
-  if (!fs.existsSync(localPackageBase)) {
-    fs.rmdirSync(localPackageBase)
+  if (fs.existsSync(localPackageBase)) {
+    rimraf.sync(localPackageBase)
     fs.mkdirSync(localPackageBase)
   }
   const localFileName = 'update' + suffix

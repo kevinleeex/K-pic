@@ -1,6 +1,6 @@
 {
   "name": "k-pic",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "author": "Kevin <kevinleeex@foxmail.com>",
   "description": "This is a cloud image uploader for Mac & PC(*) built with electron & vue.",
   "license": "MIT",
@@ -91,6 +91,7 @@
     "element-ui": "^2.4.7",
     "i": "^0.3.6",
     "request": "^2.88.0",
+    "rimraf": "^2.6.2",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-i18n": "^8.1.0",
