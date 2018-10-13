@@ -5,6 +5,7 @@ const {
   ipcMain,
   dialog,
   shell,
+  globalShortcut,
   Menu,
   Tray
 } = require('electron')
@@ -59,6 +60,19 @@ app.on('ready', () => {
     // autoUpdater.checkForUpdatesAndNotify()
     autoUpdater.checkForUpdates()
   }
+  // register the global shortcuts
+  const ret = globalShortcut.register('Shift+CommandOrControl+X', () => {
+    console.log('CommandOrControl+X is pressed')
+    toggleWindow()
+  })
+})
+
+app.on('will-quit', () => {
+  // unregister all shortcuts
+  globalShortcut.unregister('Shift+CommandOrControl+X')
+
+  // clear all shortcuts
+  globalShortcut.unregisterAll()
 })
 
 // Quit the app when the window is closed
@@ -134,6 +148,9 @@ const createWindow = () => {
   if (productionDev) {
     window.webContents.openDevTools()
   }
+  window.on('blur', (event) => {
+    window.hide()
+  })
   window.loadURL(winURL)
 }
 
@@ -232,7 +249,6 @@ function computeSHA (file) {
 }
 
 function updateNow (info) {
-  app.dock.show()
   isDownloading = true
   console.info('updateNow', isDownloading)
   let suffix = '.dmg'
@@ -269,7 +285,7 @@ function updateNow (info) {
   }
 
   sendMessage('Start download')
-  download(BrowserWindow.getFocusedWindow(), remoteFile, config).then(() => dialog.showMessageBox({
+  download(window, remoteFile, config).then(() => dialog.showMessageBox({
     title: '下载完成',
     message: '下载完成，点击更新到: v' + version,
     detail: 'Click quit and install (manually)...'
@@ -292,7 +308,6 @@ function exit () {
       defaultId: 0
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
-        dialog.close()
       } else {
         isDownloading = false
         exit()
@@ -313,6 +328,7 @@ function updateSets () {
     console.info('checking for update')
   })
   autoUpdater.on('update-available', (info) => {
+    app.dock.show()
     dialog.showMessageBox({
       type: 'info',
       title: '[K-pic]发现可用更新',
