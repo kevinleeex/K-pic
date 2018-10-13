@@ -1,4 +1,4 @@
-<div align="center"><img style="display:inline-block" width='150' src="./imgs/logo.png"/><p>
+<div align="center"><img style="display:inline-block" width='150' src="../assets/logo.png"/><p>
     <span style="font-size: 14px">Version: 0.1.0</span><br>
     <span>"A Simple Cloud Image Storage GUI Uploader"</span>
     </p>
@@ -39,7 +39,7 @@ This is a simple cloud image uploader GUI tool. (Not only for the images in fact
 See [K-pic Releases](https://github.com/kevinleeex/K-pic/releases)
 
 ## Previews
-<img style="display:inline-block" width='50%' src="./imgs/k-pic_main.png"/>
+<img style="display:inline-block" width='50%' src="../assets/k-pic_main.png"/>
 
 
 ## Getting Started
