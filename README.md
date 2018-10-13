@@ -71,7 +71,7 @@ yarn install
 
 > yarn command is recommended as you could use ``` yarn autoclean``` to reduce the size of the package.
 
- ### Deployment
+### Deployment
 
 Run the app with development mode.
 
@@ -118,6 +118,12 @@ I would like to extend my sincere gratitude to the authors and contributors of t
 If this project helps you, you can support me to do better.  
 <a href="https://paypal.me/kevinleeex"><img alt="Coffee" src="https://img.shields.io/badge/PayPal me a-Coffee-7A501E.svg?longCache=true&style=for-the-badge"></a>
 
+## TO-DO
+
+- [ ] Form validation
+- [ ] Support more services
+- [ ] Image pre-process
+- [ ] History management
 
 ## License
 
