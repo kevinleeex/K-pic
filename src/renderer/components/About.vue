@@ -2,7 +2,7 @@
     <div>
         <el-container>
             <el-header height="100px">
-                <div class="app_title" @click="open('http:lidengju.com')">K-Pic</div>
+                <div class="app_title" @click="open('http:lidengju.com/K-pic')">K-Pic</div>
                 <div class="version"><p><span>{{$t('m.version')}}:</span> <span>{{$t('m.vno')}}</span></p></div>
                 <div class="intro"><p>{{$t('m.intro')}}</p></div>
                 <div class="animated rubberBand delay-1s"

@@ -154,7 +154,7 @@ const openWindow = (url) => {
     title: 'K-Pic',
     show: false,
     useContentSize: true,
-    alwaysOnTop: false,
+    alwaysOnTop: true,
     transparent: false,
     frame: false,
     darkTheme: true,

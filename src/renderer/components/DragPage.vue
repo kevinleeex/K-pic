@@ -3,7 +3,7 @@
         <main>
             <div class="head_bar"></div>
             <div class="title_container no_drag">
-                <div class="app_title" @click="open('http:lidengju.com')">K-Pic</div>
+                <div class="app_title" @click="open('http:lidengju.com/K-pic')">K-Pic</div>
             </div>
             <div @dragleave="dragLeave" @mouseleave="dragLeave" @dragover="dragOver" @drop="drop2upload" id="drag_area"
                  class="drag_area no_drag">
@@ -58,7 +58,7 @@
             <el-container>
                 <el-header>
                     <div class="info_title_container">
-                        <div class="info_title" @click="open('http:lidengju.com')"><p>K-Pic</p></div>
+                        <div class="info_title" @click="open('http:lidengju.com/K-pic')"><p>K-Pic</p></div>
                         <div class="version"><p><span>{{$t('m.version')}}:</span> <span>{{$t('m.vno')}}</span></p></div>
                         <div class="intro"><p>{{$t('m.intro')}}</p></div>
                     </div>
@@ -76,7 +76,7 @@
                 </el-main>
                 <el-footer class="info_footer">
                     <p>©2018 | <span class="name"
-                                     @click="open('http://lidengju.com/blog/about')">{{$t('m.author')}}.</span>{{$t('m.copyright')}}.
+                                     @click="open('http://lidengju.com/')">{{$t('m.author')}}.</span>{{$t('m.copyright')}}.
                     </p>
                 </el-footer>
             </el-container>
