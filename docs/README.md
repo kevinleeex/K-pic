@@ -1,12 +1,12 @@
 <div align="center"><img style="display:inline-block" width='150' src="../assets/logo.png"/><p>
     <span style="font-size: 14px">Version: 0.1.1</span><br>
-    <span>"A Simple Cloud Image Storage GUI Uploader"</span>
+    <span>"A Simple Cloud Image Storage GUI Uploader"</span><br>
+    <span stylt="font-size: 10px;color= #95dafc">Kevin T. Lee</span>
     </p>
     <a href="./LICENSE"><img alt="MIT" src="https://img.shields.io/github/license/mashape/apistatus.svg?&url=LICENSE&longCache=true&style=for-the-badge"></a>
         <a href="http://lidengju.com"><img alt="Code" src="https://img.shields.io/badge/Code%20with-Love-red.svg?longCache=true&style=for-the-badge"></a>
     <a href="https://github.com/kevinleeex/K-pic/releases"><img alt="Version" src="https://img.shields.io/badge/Version-0.1.0-blue.svg?longCache=true&style=for-the-badge"></a>
 </div>
-
 
 
 # K-pic
@@ -72,7 +72,7 @@ yarn install
 
 > yarn command is recommended as you could use ``` yarn autoclean``` to reduce the size of the package.
 
- ### Deployment
+### Deployment
 
 Run the app with development mode.
 
@@ -119,6 +119,13 @@ I would like to extend my sincere gratitude to the authors and contributors of t
 If this project helps you, you can support me to do better.  
 <a href="https://paypal.me/kevinleeex"><img alt="Coffee" src="https://img.shields.io/badge/PayPal me a-Coffee-7A501E.svg?longCache=true&style=for-the-badge"></a>
 
+## TO-DO
+
+- [ ] Form validation
+- [ ] Support more services
+- [ ] Image pre-process
+- [ ] History management
+- [ ] Touch bar support on Mac
 
 ## License
 

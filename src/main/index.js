@@ -24,7 +24,9 @@ let settingWin
 let contextMenu
 let manualUpdate
 
+// vars
 const productionDev = false
+let isDownloading = false
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -73,7 +75,7 @@ const createTray = () => {
   contextMenu = Menu.buildFromTemplate([{
     label: 'Quit',
     click: () => {
-      app.quit()
+      exit()
     }
   }])
   tray.on('right-click', function (event) {
@@ -184,7 +186,8 @@ const openWindow = (url) => {
         label: 'Quit',
         accelerator: 'Command+Q',
         click: function () {
-          app.quit()
+          console.info(isDownloading)
+          exit()
         }
       }
     ]
@@ -229,16 +232,20 @@ function computeSHA (file) {
 }
 
 function updateNow (info) {
-  console.info('updateNow')
-  let suffix = ''
+  app.dock.show()
+  isDownloading = true
+  console.info('updateNow', isDownloading)
+  let suffix = '.dmg'
   if (process.platform === 'darwin') {
     suffix = '.dmg'
     sendMessage(suffix)
   }
-  const remoteBase = 'http://github.com/kevinleeex/K-pic/releases/download/v' + info.version
-  const remoteFileName = 'k-pic-' + info.version + suffix
+  // let version = (productionDev) ? '0.1.1' : info.version
+  let version = info.version
+  const remoteBase = 'http://github.com/kevinleeex/K-pic/releases/download/v' + version
+  const remoteFileName = 'k-pic-' + version + suffix
   const remoteFile = path.join(remoteBase, remoteFileName)
-
+  sendMessage(remoteFile)
   // local
   const localPackageBase = path.join(storagePath, 'tmp')
   if (fs.existsSync(localPackageBase)) {
@@ -253,7 +260,7 @@ function updateNow (info) {
     directory: localPackageBase,
     filename: localFileName,
     onProgress: (progress) => {
-      console.log(progress * 100 + '%')
+      // console.log(progress * 100 + '%')
       sendMessage('Cur progress: %s %' + progress * 100)
     },
     onStarted: (item) => {
@@ -264,12 +271,36 @@ function updateNow (info) {
   sendMessage('Start download')
   download(BrowserWindow.getFocusedWindow(), remoteFile, config).then(() => dialog.showMessageBox({
     title: '下载完成',
-    message: '下载完成，点击更新到: v' + info.version,
+    message: '下载完成，点击更新到: v' + version,
     detail: 'Click quit and install (manually)...'
   }, () => {
+    isDownloading = false
     manualUpdate = false
     shell.openItem(localFile)
+    exit()
   })).catch(console.error)
+}
+
+function exit () {
+  console.info(isDownloading)
+  if (isDownloading) {
+    dialog.showMessageBox({
+      title: '[K-pic]正在更新',
+      message: '[K-pic]正在更新, 请等待更新完成后退出',
+      detail: '[K-pic] is updating, please wait...',
+      buttons: ['好(OK)', '强制退出(Quit)'],
+      defaultId: 0
+    }, (buttonIndex) => {
+      if (buttonIndex === 0) {
+        dialog.close()
+      } else {
+        isDownloading = false
+        exit()
+      }
+    })
+  } else {
+    app.quit()
+  }
 }
 
 function sendMessage (log) {
@@ -287,13 +318,15 @@ function updateSets () {
       title: '[K-pic]发现可用更新',
       message: '[K-pic]发现可用更新, 是否下载?(Update now?)',
       detail: '发布时间: [' + info.releaseDate + '] ' + '版本: v' + info.version + ', \n' + (info.releaseNotes).replace(/<(?:.|\n)*?>/gm, ''),
-      buttons: ['是(Y)', '否(N)']
+      buttons: ['是(Y)', '否(N)'],
+      defaultId: 0
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
         updateNow(info)
         // shell.openExternal(releaseBase + info.version)
         // autoUpdater.downloadUpdate()
       } else {
+        isDownloading = false
         app.dock.hide()
       }
     })
