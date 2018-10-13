@@ -86,7 +86,7 @@
     data () {
       return {
         githubUrl: 'https://github.com/kevinleeex/K-pic',
-        readme: 'https://github.com/kevinleeex/K-pic/docs',
+        readme: 'https://github.com/kevinleeex/K-pic/docs/',
         repeatStatus: false,
         donateDialogShow: false,
         licenseDialog: false
