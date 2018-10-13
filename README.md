@@ -8,7 +8,6 @@
 </div>
 
 
-
 # K-pic
 
 This is a simple cloud image uploader GUI tool. (Not only for the images in fact)
