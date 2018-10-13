@@ -118,7 +118,9 @@ I would like to extend my sincere gratitude to the authors and contributors of t
 ## Support me
 
 If this project helps you, you can support me to do better.  
-<a href="https://paypal.me/kevinleeex"><img alt="Coffee" src="https://img.shields.io/badge/PayPal me a-Coffee-7A501E.svg?longCache=true&style=for-the-badge"></a>
+<a href="https://paypal.me/kevinleeex"><img alt="Coffee" src="https://img.shields.io/badge/PayPal_me_a-Coffee-7A501E.svg?longCache=true&style=for-the-badge"></a>
+
+Or click <a href="http://lidengju.com/donate">Donete me</a> with Wechat or Alipay
 
 ## TO-DO
 

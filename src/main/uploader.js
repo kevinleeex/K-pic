@@ -55,14 +55,16 @@ export const uploader = {
     console.info('copy to clipboard')
     const isMarkdown = arg.setting.isMarkdown
     const files = arg.files
-
     let dstList = []
     for (let file of files) {
       if (isMarkdown) {
         const retMarkStr = toMarked(file)
         dstList.push(retMarkStr)
+      } else {
+        dstList.push(file.dstPath)
       }
     }
+    console.info(JSON.stringify(dstList))
     save2clipboard(dstList.join('\n'))
     event.sender.send('on-copied', dstList.length)
   }
