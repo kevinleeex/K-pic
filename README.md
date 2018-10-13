@@ -1,11 +1,11 @@
-<div><img style="display:inline-block" width='150' src="./imgs/logo.png"/><p>
+<div align="center"><img style="display:inline-block" width='150' src="./imgs/logo.png"/><p>
     <span style="font-size: 14px">Version: 0.1.0</span><br>
     <span>"A Simple Cloud Image Storage GUI Uploader"</span>
     </p>
     <a href="./LICENSE"><img alt="MIT" src="https://img.shields.io/github/license/mashape/apistatus.svg?&url=LICENSE&longCache=true&style=for-the-badge"></a>
         <a href="http://lidengju.com"><img alt="Code" src="https://img.shields.io/badge/Code%20with-Love-red.svg?longCache=true&style=for-the-badge"></a>
     <a href="https://github.com/kevinleeex/K-pic/releases"><img alt="Version" src="https://img.shields.io/badge/Version-0.1.0-blue.svg?longCache=true&style=for-the-badge"></a>
-<div>
+</div>
 
 
 
