@@ -1,4 +1,4 @@
-<div align="center"><img style="display:inline-block" width='150' src="./imgs/logo.png"/><p>
+<div><img style="display:inline-block" width='150' src="./imgs/logo.png"/><p>
     <span style="font-size: 14px">Version: 0.1.0</span><br>
     <span>"A Simple Cloud Image Storage GUI Uploader"</span>
     </p>
