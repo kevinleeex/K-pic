@@ -34,9 +34,9 @@ export const uploader = {
           } else {
             retMsg = {
               state: false,
-              code: 400,
-              msg: 'upload failed',
-              data: retData
+              code: retData.code,
+              msg: retData.msg,
+              data: {}
             }
           }
           event.sender.send('on-upload', retMsg)
@@ -94,7 +94,11 @@ const uploadCOS = function (server, filePro, callback) {
         }
       }
     } else {
-      retData = {}
+      console.error('Server error')
+      retData = {
+        code: err.statusCode,
+        msg: err.error.Message
+      }
     }
     callback(retData)
   })

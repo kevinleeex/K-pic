@@ -280,12 +280,15 @@
 
       reciever.resUpload((data) => {
         console.info('data: ' + JSON.stringify(data.data))
-        if (data.data.code === 200) {
+        if (data.state) {
           this.$message({message: this.$t('m.tips.upSucceed'), center: true})
           this.pasteList.push(data.data.fileInfo)
+        } else {
+          this.$message({message: 'Error: ' + data.msg, center: true, type: 'error'})
+          this.upStatus = 'resting'
         }
         this.counter -= 1
-        if (this.counter === 0) {
+        if (this.counter <= 0) {
           this.upStatus = 'resting'
           const srcData = {setting: {isMarkdown: this.isMarkdown}, files: this.pasteList}
           sender.copy2clipboard(srcData)
