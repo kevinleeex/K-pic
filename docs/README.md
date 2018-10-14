@@ -39,8 +39,10 @@ This is a simple cloud image uploader GUI tool. (Not only for the images in fact
 See [K-pic Releases](https://github.com/kevinleeex/K-pic/releases)
 
 ## Previews
-<img style="display:inline-block" width='50%' src="../assets/k-pic_main.png"/>
+<img style="display:inline-block" width='50%' src="../assets/k-pic_main.png"/><img style="display:inline-block" width='50%' src="../assets/k-pic_setting.png">
 
+### Video
+<video src="../assets/k-pic_demo.mp4"/>
 
 ## Getting Started
 
