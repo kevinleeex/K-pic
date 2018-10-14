@@ -45,7 +45,7 @@ See [K-pic Releases](https://github.com/kevinleeex/K-pic/releases)
 
 
 ### Video
-<video src="./assets/k-pic_demo.mp4"/>
+[![K-pic_demo](./assets/video.png)](https://youtu.be/BwLREU_4NB0)
 
 ## Getting Started
 
