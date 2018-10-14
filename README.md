@@ -43,7 +43,7 @@ See [K-pic Releases](https://github.com/kevinleeex/K-pic/releases)
 <img style="display:inline-block" width='50%' src="./assets/k-pic_main.png"/><img style="display:inline-block" width='50%' src="./assets/k-pic_setting.png">
 
 ### Video
-<video src="./assets/k-pic_demo.mp4"/>
+<video src="https://github.com/kevinleeex/K-pic/blob/master/assets/k-pic_demo.mp4"/>
 
 ## Getting Started
 
