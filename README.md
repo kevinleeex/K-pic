@@ -1,6 +1,6 @@
 <div align="center"><img style="display:inline-block" width='150' src="./assets/logo.png"/><p>
     <span style="font-size: 14px">Version: 0.1.2</span><br>
-    <span>"A Simple Cloud Image Storage GUI Uploader"</span><br>
+    <span>"A Simple Image Cloud Storage GUI Uploader"</span><br>
     <span style="font-size: 12px;color= #95dafc">-- Created by <a>Kevin T. Lee</a> --</span>
     </p>
     <a href="./LICENSE"><img alt="MIT" src="https://img.shields.io/github/license/mashape/apistatus.svg?&url=LICENSE&longCache=true&style=for-the-badge"></a>
